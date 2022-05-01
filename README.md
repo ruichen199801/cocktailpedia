@@ -2,7 +2,7 @@
 
 ## Project Name: CocktailPedia
 
-# Team Members
+## Team Members
 
 |         Name         |          Email          |
 |:--------------------:|:-----------------------:|
