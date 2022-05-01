@@ -1,0 +1,6 @@
+# ignore Mac OS files
+.DS_Store
+# ignore IDEA files
+.idea
+# ignore output files
+/out
