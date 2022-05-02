@@ -19,12 +19,12 @@ CocktailPedia (parent directory)
 │   └── recipe_dataset.csv
 ├── src
 │   ├── ICocktailRecommender.java      // interface
-│   ├── CocktailRecommender.java.      // implementation class
+│   ├── CocktailRecommender.java       // implementation class
 │   ├── CocktailRecommenderTest.java   // test class 
 │   ├── RecommenderApplication.java    // boot file
 │   ├── Cocktail.java                  // cocktail recipe class
 │   ├── Recipe.java                    // customized recipe class
-│   └── Style.java                     // preparation stype enum class
+│   └── Style.java                     // preparation style enum class
 └── users                              // store users' customized recipes
     └── test.txt
 ```
