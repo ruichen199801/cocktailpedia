@@ -1,22 +1,51 @@
 import java.util.List;
 
 /**
- *
+ * The class for a detailed cocktail recipe derived from the dataset.
  */
 
 public class Cocktail {
 
+    /**
+     * drink: name of the drink
+     * e.g. Bloody Mary
+     */
     private String drink;
 
+    /**
+     * category: type of the drink
+     * e.g. shot
+     */
     private String category;
 
+    /**
+     * glassware: glass type used for the drink
+     * e.g. Highball glass
+     */
     private String glassware;
 
+    /**
+     * ingredients: a list of ingredients of the drink
+     * e.g. Vodka + Triple Sec + Lemon Juice
+     */
     private List<String> ingredients;
 
+    /**
+     * taste: taste of the drink
+     * e.g. sweet
+     */
     private String taste;
 
+    /**
+     * category: text instructions on how to make the drink
+     * e.g. Pour the vodka, dry vermouth and olive brine into a cocktail shaker with a handful of ice and shake well.
+     */
     private String preparation;
+
+
+    /**
+     * constructor
+     */
 
     public Cocktail(String drink) {
         this.drink = drink;
@@ -35,6 +64,10 @@ public class Cocktail {
         this.taste = taste;
         this.preparation = preparation;
     }
+
+    /**
+     * getters and setters
+     */
 
     public String getDrink() {
         return drink;
