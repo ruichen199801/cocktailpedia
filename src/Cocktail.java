@@ -32,7 +32,7 @@ public class Cocktail {
 
     /**
      * taste: taste of the drink
-     * e.g. sweet
+     * e.g. sweet,
      */
     private String taste;
 
