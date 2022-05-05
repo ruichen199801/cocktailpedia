@@ -18,7 +18,7 @@ public class Recipe {
 
     /**
      * style: preparation style of the drink
-     * e.g. shake
+     * e.g.  shake
      */
     private String style;
 
