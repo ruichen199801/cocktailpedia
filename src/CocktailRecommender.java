@@ -1,6 +1,9 @@
 import java.util.List;
 import java.util.Map;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
 /**
  * The implementation class for cocktail recommender.
  */
@@ -63,8 +66,26 @@ public class CocktailRecommender implements ICocktailRecommender {
 
     @Override
     public void customizeRecipe(String username,
-                                Map<String, Cocktail> recipeMap) {
-        // TODO: implement
+                                String drink, String ingredients, String style) {
+        Recipe recipe = new Recipe(drink, ingredients, style);
+        String path = "/Users/wrzhang/Documents/CIT594/project";
+        //create the new directory of this user if it does not exist
+        File dir = new File(path + "/" + username);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        //create new file used to store user's customized recipe
+        File f = new File(dir.getPath() + "/recipe.txt");
+        try {
+            FileWriter myWriter = new FileWriter(f.getPath(), true);
+            String content = username + " designed a new recipe named " + drink +
+                    " with " + ingredients + " as base ingredients, in the " +
+                    style + " style.";
+                    myWriter.write(content);
+            myWriter.close();
+        } catch (IOException e){
+            e.getStackTrace();
+        }
     }
 
 }
