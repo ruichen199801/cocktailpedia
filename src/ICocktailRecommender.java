@@ -48,7 +48,7 @@ public interface ICocktailRecommender {
      * @return a map storing different categories of cocktail tastes, where the key is the
      *         taste, the value is the list of cocktails of that taste.
      */
-    public Map<String, String> buildIndexByPreference(Map<String, Cocktail> recipeMap);
+    public Map<String, List<Cocktail>> buildIndexByPreference(Map<String, Cocktail> recipeMap);
 
     /**
      * Return the recipe of the drink name the user queries for, and update the query count of this drink
@@ -88,7 +88,7 @@ public interface ICocktailRecommender {
      * @return the name of the drink to recommend.
      */
     public String recommendByPreference(String taste,
-                                        Map<String, String> preferenceMap);
+                                        Map<String, List<Cocktail>> preferenceMap);
 
     /**
      * Return the recommended cocktail recipe to users based on users' options:
@@ -104,7 +104,7 @@ public interface ICocktailRecommender {
      * @return the cocktail recipe to recommend.
      */
     public Cocktail recommend(String taste,
-                              Map<String, String> preferenceMap,
+                              Map<String, List<Cocktail>> preferenceMap,
                               Map<String, Integer> popularityMap,
                               Map<String, Cocktail> recipeMap);
 
