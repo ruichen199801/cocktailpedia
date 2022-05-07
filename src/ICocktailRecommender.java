@@ -44,22 +44,19 @@ public interface ICocktailRecommender {
     /**
      * Group cocktail drinks by taste preference, and store into a new preference map.
      *
-     * @param recipeMap the map storing cocktails recipes.
      * @return a map storing different categories of cocktail tastes, where the key is the
      *         taste, the value is the list of cocktails of that taste.
      */
-    public Map<String, List<Cocktail>> buildIndexByPreference(Map<String, Cocktail> recipeMap);
+    public Map<String, List<Cocktail>> buildIndexByPreference();
 
     /**
      * Return the recipe of the drink name the user queries for, and update the query count of this drink
      * in the popularity map.
      *
      * @param drink the name of the drink.
-     * @param recipeMap the map storing cocktails recipes.
      * @return the recipe of the cocktail.
      */
-    public Cocktail queryByDrink(String drink,
-                                 Map<String, Cocktail> recipeMap);
+    public Cocktail queryByDrink(String drink);
 
     /**
      * Recommend classic cocktails to users, and return the name of the recommended drink.
@@ -104,9 +101,7 @@ public interface ICocktailRecommender {
      * the directory named by the username, and store it into a user map.
      *
      * @param username name of the user.
-     * @param recipeMap the map storing cocktails recipes.
      */
-    public void customizeRecipe(String username,
-                                Map<String, Cocktail> recipeMap);
+    public void customizeRecipe(String username);
 
 }
