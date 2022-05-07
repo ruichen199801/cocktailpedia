@@ -1,5 +1,7 @@
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 /**
  * The test class for cocktail recommender.
