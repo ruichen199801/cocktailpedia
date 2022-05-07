@@ -1,7 +1,10 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Before;
-import org.testng.annotations.Test;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The test class for cocktail recommender.
@@ -14,6 +17,9 @@ public class CocktailRecommenderTest {
     @Before
     public void init() {
         cr = new CocktailRecommender();
+        cr.loadDataset("");
+        cr.initializePopularity(cr._recipeMap);
+        cr.buildIndexByPreference(cr._recipeMap);
     }
 
     @Test
@@ -38,7 +44,10 @@ public class CocktailRecommenderTest {
 
     @Test
     public void testRecommendByClassic() {
-        // TODO: implement
+        String curDrink = cr.recommendByClassic();
+        List<String> CLASSIC = Arrays.asList
+                ("Old Fashioned", "Negroni", "Daiquiri", "Dry Martini", "Whiskey Sour");
+        assertTrue(CLASSIC.contains(curDrink));
     }
 
     @Test

@@ -7,6 +7,10 @@ import java.util.*;
 
 public class CocktailRecommender implements ICocktailRecommender {
 
+    // fields
+    Map<String, Cocktail> _recipeMap;
+    Map<String, Integer> _popularityMap;
+
     @Override
     public Map<String, Cocktail> loadDataset(String path) {
         Map<String, Cocktail> recipeMap = new HashMap<>();
@@ -32,6 +36,10 @@ public class CocktailRecommender implements ICocktailRecommender {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // update filed
+        _recipeMap = recipeMap;
+
         return recipeMap;
     }
 
@@ -45,6 +53,10 @@ public class CocktailRecommender implements ICocktailRecommender {
                 popularityMap.put(s, popularityMap.get(s) + 1);
             }
         }
+
+        // update filed
+        _popularityMap = popularityMap;
+
         return popularityMap;
     }
 
@@ -74,32 +86,86 @@ public class CocktailRecommender implements ICocktailRecommender {
 
     @Override
     public String recommendByClassic() {
-        // TODO: implement
-        return null;
+        // directly return a class recommendation randomly in CLASSIC
+        int index = (int) (Math.random() * 5);
+        return CLASSIC.get(index);
     }
 
     @Override
     // First, convert the popularity map (general map) to a sorted set(sort by value) e.g. SortedSet<Pair<String, Integer>>
     // Then choose top xx drinks
     public String recommendByPopularity(Map<String, Integer> popularityMap) {
-        // TODO: implement
-        return null;
+        // iterate to find the key with maximum value
+        int max = Integer.MIN_VALUE;
+        String res = "";
+        for (Map.Entry<String, Integer> e : popularityMap.entrySet()) {
+            if (max < e.getValue()) {
+                max = e.getValue();
+                res = e.getKey();
+            }
+        }
+        // and return the key string
+        return res;
     }
 
     @Override
     public String recommendByPreference(String taste,
                                         Map<String, List<Cocktail>> preferenceMap) {
-        // TODO: implement
-        return null;
+        // get the preference list of cocktail, find the most popular one and return
+        List<Cocktail> list = preferenceMap.get(taste);
+
+        // corner case
+        if (list == null || list.size() == 0) {
+            return recommendByClassic();
+        }
+
+        int index = (int) (Math.random() * list.size());
+
+        // randomly return one in the preference list
+        String res = list.get(index).getDrink();
+
+
+        // directly return the drink name
+        return res;
     }
 
     @Override
     public Cocktail recommend(String taste,
                               Map<String, List<Cocktail>> preferenceMap,
                               Map<String, Integer> popularityMap,
-                              Map<String, Cocktail> recipeMap) {
-        // TODO: implement
-        return null;
+                              Map<String, Cocktail> recipeMap,
+                              int option) {
+        /*
+         * return different cocktail by the option:
+         * return by classic when option is 1
+         * return by popularity when option is 2
+         * return by preference when option is 3
+         * return by preference and popularity when option is 4
+         * default return by classic when option is invalid
+         */
+
+        String drink = recommendByClassic();
+        if (option == 2) {
+            // directly get drink
+            drink = recommendByPopularity(popularityMap);
+        } else if (option == 3) {
+            // directly get drink
+            drink = recommendByPreference(taste, preferenceMap);
+        } else if (option == 4) {
+            // first get preference map
+            List<Cocktail> list = preferenceMap.get(taste);
+            // then find the most popular one
+            int max = Integer.MIN_VALUE;
+            for (Cocktail cocktail : list) {
+                int curPopularity = popularityMap.get(cocktail.getDrink());
+                if (curPopularity > max) {
+                    max = curPopularity;
+                    drink = cocktail.getDrink();
+                }
+            }
+        }
+
+        return _recipeMap.get(drink);
     }
 
     @Override
