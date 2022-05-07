@@ -93,13 +93,7 @@ Bailey's Dream Shake;Soft Drink / Soda;Collins glass;Vanilla Ice-Cream,Cream;cre
 Banana Daiquiri;Ordinary Drink;Champagne flute;Lime Juice,Banana,Sugar,Cherry;sweet;Pour all ingredients into shaker with ice cubes. Shake well. Strain in chilled cocktail glass.
 Barracuda;Ordinary Drink;Margarita glass;Pineapple Juice,Lime Juice;sour;Shake pour ingredients with ice. Strain into glass, top with Sparkling wine.
 Belgian Blue;Soft Drink / Soda;Highball glass;Sprite;sweet;Just pour all ingredients in the glass and stir...
-Bellini Martini;Ordinary Drink;Cocktail glass;Lemon Peel,Peach Nectar;sweet;"Add ice cubes to shaker.
-Add vodka.
-Add peach schnapps.
-Add peach nectar.
-Shake.
-Strain into glass.
-Add lemon twist peel."
+Bellini Martini;Ordinary Drink;Cocktail glass;Lemon Peel,Peach Nectar;sweet;"Add ice cubes to shaker. Add vodka. Add peach schnapps. Add peach nectar. Shake. Strain into glass. Add lemon twist peel."
 Bermuda Highball;Ordinary Drink;Highball glass;Lemon Peel,Carbonated Water;water;Pour brandy, gin, and dry vermouth into a highball glass over ice cubes. Fill with carbonated water and stir. Add the twist of lemon and serve. (Ginger ale may be substituted for carbonated water, if preferred.)
 Berry Deadly;Punch / Party Drink;Collins Glass;Orange Juice,Kool-Aid Tropical Berry;sweet;Add all ingredients to large bowl. Stir gently. Serve chilled.
 Between The Sheets;Ordinary Drink;Cocktail glass;Lemon Juice;sour;Pour all ingredients into shaker with ice cubes, shake, strain into chilled cocktail glass.
@@ -162,25 +156,17 @@ Cuba Libra;Ordinary Drink;Highball glass;Lime,Coca-Cola;sweet;Fill tall glass wi
 Cuba Libre;Ordinary Drink;Highball glass;Lime,Coca-Cola;sweet;Build all ingredients in a Collins glass filled with ice. Garnish with lime wedge.
 Daiquiri;Ordinary Drink;Cocktail glass;Lime,Powdered Sugar;sweet;Pour all ingredients into shaker with ice cubes. Shake well. Strain in chilled cocktail glass.
 Danbooka;Coffee / Tea;Coffee Mug;Coffee;bitter;pour it in and mix it.
-Dark Caipirinha;Cocktail;Highball glass;Lime,Demerara Sugar;sweet;"Muddle the sugar into the lime wedges in an old-fashioned glass.
-Fill the glass with ice cubes.
-Pour the cachaca into the glass.
-Stir well."
+Dark Caipirinha;Cocktail;Highball glass;Lime,Demerara Sugar;sweet;"Muddle the sugar into the lime wedges in an old-fashioned glass. Fill the glass with ice cubes. Pour the cachaca into the glass. Stir well."
 Dark and Stormy;Ordinary Drink;Highball glass;Ginger Beer;sweet;In a highball glass filled with ice add 6cl dark rum and top with ginger beer. Garnish with lime wedge.
 Darkwood Sling;Soft Drink / Soda;Cocktail glass;Orange Juice,Soda Water;sweet;There are many good cherry liqueurs you can use, but I prefere Heering. Add one share of the liqueur. Then you add one share of Soda. For a sour sling use Tonic (most people prefer the drink without Tonic). Afterwards you fill the glass with Orange Juice and ice cubes.
 Derby;Ordinary Drink;Cocktail glass;Mint;mint;Pour all ingredients into a mixing glass with ice. Stir. Strain into a cocktail glass. Garnish with a sprig of fresh mint in the drink.
 Diesel;Beer;Pint glass;Blackcurrant Cordial;sweet;Pour the lager first then add the blackcurrant cordial. Top up with the cider. The colour sholud be very dark approaching the colour of Guiness.
-Dirty Martini;Cocktail;Cocktail glass;Lemon,Olive,Olive Brine;salty;"Pour the vodka, dry vermouth and olive brine into a cocktail shaker with a handful of ice and shake well.
-Rub the rim of a martini glass with the wedge of lemon.
-Strain the contents of the cocktail shaker into the glass and add the olive.
-A dirty Martini contains a splash of olive brine or olive juice and is typically garnished with an olive."
+Dirty Martini;Cocktail;Cocktail glass;Lemon,Olive,Olive Brine;salty;"Pour the vodka, dry vermouth and olive brine into a cocktail shaker with a handful of ice and shake well. Rub the rim of a martini glass with the wedge of lemon. Strain the contents of the cocktail shaker into the glass and add the olive. A dirty Martini contains a splash of olive brine or olive juice and is typically garnished with an olive."
 Downshift;Punch / Party Drink;Hurricane glass;Sprite,Fruit Punch;sweet;Start with the Sprite. Next comes the tequila. After that, add the Minute Maid Fruit Punch, then float the 151. Rocks optional.
 Dragonfly;Ordinary Drink;Highball glass;Ginger Ale,Lime;sour;In a highball glass almost filled with ice cubes, combine the gin and ginger ale. Stir well. Garnish with the lime wedge.
 Dry Rob Roy;Ordinary Drink;Cocktail glass;Lemon Peel;sour;In a mixing glass half-filled with ice cubes, combine the Scotch and vermouth. Stir well. Strain into a cocktail glass. Garnish with the lemon twist.
 Dubonnet Cocktail;Ordinary Drink;Cocktail glass;Lemon Peel;sour;Stir all ingredients (except lemon peel) with ice and strain into a cocktail glass. Add the twist of lemon peel and serve.
-Duchamp's Punch;Cocktail;Old-fashioned glass;Lime Juice,Lavender,Pepper,Pineapple Syrup,St. Germain;sweet;"Shake all ingredients.
-Double strain in a chilled double old fashioned glass with abig ice cube.
-Garnish with a couple of lavender sprigs"
+Duchamp's Punch;Cocktail;Old-fashioned glass;Lime Juice,Lavender,Pepper,Pineapple Syrup,St. Germain;sweet;"Shake all ingredients. Double strain in a chilled double old fashioned glass with abig ice cube. Garnish with a couple of lavender sprigs"
 Egg Nog #4;Punch / Party Drink;Punch bowl;Vanilla Extract,Salt,Whipping Cream,Egg White,Milk,Sugar,Nutmeg,Egg Yolk,Sugar;sweet;In a small mixer bowl beat egg yolks till blended. Gradually add 1/4 cup sugar, beating at high speed till thick and lemon colored. Stir in milk, stir in rum, bourbon, vanilla, and salt. Chill thoroughly. Whip cream. Wash beaters well. In a large mixer bowl beat egg whites till soft peaks form. Gradually add remaining 1/4 cup sugar, beating to stiff peaks. Fold yolk mixture and whipped cream into egg whites. Serve immediately. Sprinkle nutmeg over each serving. Serve in a punch bowl or another big bowl. NOTE: For a nonalcoholic eggnog, prepare Eggnog as above, except omit the bourbon and rum and increase the milk to 3 cups.
 Egg Nog - Healthy;Punch / Party Drink;Collins Glass;Nutmeg,Sugar,Egg,Vanilla Extract,Condensed Milk Skimmed,Milk Skimmed;cream;Whip egg substitute and sugar together, combine with the two kinds of milk, vanilla, and rum. Mix well. Chill over night. Sprinkle with nutmeg. Makes 6 servings.
 Egg-Nog - Classic Cooked;Punch / Party Drink;Pitcher;Egg,Vanilla Extract,Sugar,Milk,Salt;salty;In large saucepan, beat together eggs, sugar and salt, if desired. Stir in 2 cups of the milk. Cook over low heat, stirring constantly, until mixture is thick enough to coat a metal spoon and reaches 160 degrees F. Remove from heat. Stir in remaining 2 cups milk and vanilla. Cover and regfigerate until thoroughly chilled, several hours or overnight. Just before serving, pour into bowl or pitcher. Garnish or add stir-ins, if desired. Choose 1 or several of: Chocolate curls, cinnamon sticks, extracts of flavorings, flavored brandy or liqueur, fruit juice or nectar, ground nutmeg, maraschino cherries, orange slices, peppermint sticks or candy canes, plain brandy, run or whiskey, sherbet or ice-cream, whipping cream, whipped. Serve immediately.
@@ -296,10 +282,7 @@ National Aquarium;Ordinary Drink;Collins Glass;Sour Mix,Lemon-Lime Soda;sweet;Po
 New York Lemonade;Cocktail;Cocktail glass;Club Soda,Lemon Juice Sweetened;sour;Serve in a chilled cocktail glass. Lemon and sugar the rim. Stir and Strain.
 New York Sour;Ordinary Drink;Whiskey sour glass;Cherry,Sugar,Lemon,Lemon;sour;Shake blended whiskey, juice of lemon, and powdered sugar with ice and strain into a whiskey sour glass. Float claret on top. Decorate with the half-slice of lemon and the cherry and serve.
 Nutty Irishman;Milk / Float / Shake;Highball Glass;Milk;cream;Serve over ice
-Old Fashioned;Cocktail;Old-fashioned glass;Water,Sugar;sweet;"Place sugar cube in old fashioned glass and saturate with bitters, add a dash of plain water. Muddle until dissolved.
-Fill the glass with ice cubes and add whiskey.
-
-Garnish with orange twist, and a cocktail cherry."
+Old Fashioned;Cocktail;Old-fashioned glass;Water,Sugar;sweet;"Place sugar cube in old fashioned glass and saturate with bitters, add a dash of plain water. Muddle until dissolved. Fill the glass with ice cubes and add whiskey. Garnish with orange twist, and a cocktail cherry."
 Orange Crush;Shot;Shot glass;Orange Juice;sweet;Add all ingredients to tumbler-Pour as shot
 Orange Oasis;Ordinary Drink;Highball glass;Orange Juice,Ginger Ale;sweet;Shake brandy, gin, and orange juice with ice and strain into a highball glass over ice cubes. Fill with ginger ale, stir, and serve.
 Orange Push-up;Ordinary Drink;Hurricane glass;Orange Juice,Grenadine,Sour Mix;sour;Combine liquors in a blender. Add a half scoop of ice and blend. Garnish with an orange and cherry flag. So good it will melt in your mouth!!!
