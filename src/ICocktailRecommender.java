@@ -12,7 +12,7 @@ public interface ICocktailRecommender {
      * A default list of classic cocktails.
      */
     public static final List<String> CLASSIC = Arrays.asList
-            ("Old Fashioned", "Negroni", "Daiquiri", "Dry Martini", "Whiskey Sour");
+            ("Old Fashioned", "Long Island Iced Tea", "Daiquiri", "Martini", "Whiskey Sour");
 
     /**
      * A default number of recommendation limit.
