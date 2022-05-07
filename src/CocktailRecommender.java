@@ -65,10 +65,10 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public void customizeRecipe(String username,
-                                String drink, String ingredients, String style) {
+    public boolean customizeRecipe(String username,
+                                String drink, String ingredients, String style,
+                                String path) {
         Recipe recipe = new Recipe(drink, ingredients, style);
-        String path = "/Users/wrzhang/Documents/CIT594/project";
         //create the new directory of this user if it does not exist
         File dir = new File(path + "/" + username);
         if(!dir.exists()){
@@ -76,16 +76,18 @@ public class CocktailRecommender implements ICocktailRecommender {
         }
         //create new file used to store user's customized recipe
         File f = new File(dir.getPath() + "/recipe.txt");
+        boolean saved = false;
         try {
             FileWriter myWriter = new FileWriter(f.getPath(), true);
             String content = username + " designed a new recipe named " + drink +
                     " with " + ingredients + " as base ingredients, in the " +
-                    style + " style.";
-                    myWriter.write(content);
+                    style + " style.\n";
+            myWriter.write(content);
             myWriter.close();
+            saved = true;
         } catch (IOException e){
             e.getStackTrace();
         }
+        return saved;
     }
-
 }
