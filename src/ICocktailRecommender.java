@@ -106,7 +106,8 @@ public interface ICocktailRecommender {
     public Cocktail recommend(String taste,
                               Map<String, List<Cocktail>> preferenceMap,
                               Map<String, Integer> popularityMap,
-                              Map<String, Cocktail> recipeMap);
+                              Map<String, Cocktail> recipeMap,
+                              int option);
 
     /**
      * Allow a user to create a customized cocktail recipe. The user can choose from a list of
