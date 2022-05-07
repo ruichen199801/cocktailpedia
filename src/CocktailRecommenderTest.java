@@ -20,7 +20,7 @@ public class CocktailRecommenderTest {
     public void init() {
         cr = new CocktailRecommender();
         cr.loadDataset(path);
-        cr.buildIndexByPreference(cr.getRecipeMap());
+        cr.buildIndexByPreference();
     }
 
     @Test
@@ -48,7 +48,7 @@ public class CocktailRecommenderTest {
     public void testBuildIndexByPreference() {
         CocktailRecommender cocktailRecommender = new CocktailRecommender();
         Map<String, Cocktail> map = cocktailRecommender.loadDataset(path);
-        Map<String, List<Cocktail>> preference = cocktailRecommender.buildIndexByPreference(map);
+        Map<String, List<Cocktail>> preference = cocktailRecommender.buildIndexByPreference();
         assertTrue(preference.keySet().contains("sour"));
         assertTrue(preference.keySet().contains("spicy"));
         assertTrue(preference.keySet().contains("sweet"));
@@ -58,7 +58,7 @@ public class CocktailRecommenderTest {
     public void testQueryByDrink() {
         CocktailRecommender cocktailRecommender = new CocktailRecommender();
         Map<String, Cocktail> receipe = cocktailRecommender.loadDataset(path);
-        Cocktail cocktail = cocktailRecommender.queryByDrink("White Lady", receipe);
+        Cocktail cocktail = cocktailRecommender.queryByDrink("White Lady");
         assertEquals("Ordinary Drink".toLowerCase(), cocktail.getCategory());
         assertEquals("Cocktail glass".toLowerCase(), cocktail.getGlassware());
         assertEquals("sour", cocktail.getTaste());

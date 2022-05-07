@@ -43,11 +43,11 @@ public class CocktailRecommender implements ICocktailRecommender {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        initializePopularity(recipeMap);
+        initializePopularity();
         return recipeMap;
     }
 
-    private Map<String, Integer> initializePopularity(Map<String, Cocktail> recipeMap) {
+    private Map<String, Integer> initializePopularity() {
         for (String s: recipeMap.keySet()){
             if (!popularityMap.containsKey(s)){
                 popularityMap.put(s, 0);
@@ -59,7 +59,7 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public Map<String, List<Cocktail>> buildIndexByPreference(Map<String, Cocktail> recipeMap) {
+    public Map<String, List<Cocktail>> buildIndexByPreference() {
 
         for (Cocktail cocktail: recipeMap.values()){
             String taste = cocktail.getTaste();
@@ -72,7 +72,7 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public Cocktail queryByDrink(String drink, Map<String, Cocktail> recipeMap) {
+    public Cocktail queryByDrink(String drink) {
         if (!recipeMap.containsKey(drink)){
             System.out.printf("We are sorry %s is not available currently, please try other drinks.", drink);
         }
@@ -167,8 +167,7 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public void customizeRecipe(String username,
-                                Map<String, Cocktail> recipeMap) {
+    public void customizeRecipe(String username) {
         // TODO: implement
     }
 
