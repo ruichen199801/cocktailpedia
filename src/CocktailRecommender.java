@@ -1,63 +1,75 @@
 import java.io.*;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The implementation class for cocktail recommender.
  */
 
 public class CocktailRecommender implements ICocktailRecommender {
-    public static void main(String[] args) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("./datasets/cocktail_df_cleaned.csv")));
-            String line = br.readLine();
-            line = br.readLine();
-            int index1 = line.indexOf(',');
-            System.out.println(line.substring(0, index1));
-            int index2 = line.indexOf(',', index1 + 1);
-            System.out.println(line.substring(index1 + 1, index2));
-            int index3 = line.indexOf(',', index2 + 1);
-            System.out.println(line.substring(index2 + 1, index3));
-            int index5 = line.lastIndexOf('\"');
-            System.out.println(line.substring(index5 + 1));
-            int index4 = line.lastIndexOf(',', index5 - 1);
-            System.out.println(line.substring(index4 + 1, index5));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public Map<String, Cocktail> loadDataset(String path) {
+        Map<String, Cocktail> recipeMap = new HashMap<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("./datasets/cocktail_df_cleaned.csv")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("./datasets/cocktail_df_cleaned.txt")));
             String line = null;
             while ((line = br.readLine()) != null){
+                int index1 = line.indexOf(';');
+                String drink = line.substring(0, index1);
+                int index2 = line.indexOf(';', index1 + 1);
+                String category = line.substring(index1 + 1, index2);
+                int index3 = line.indexOf(';', index2 + 1);
+                String glassware = line.substring(index2 + 1, index3);
+                int index5 = line.lastIndexOf(';');
+                String preparation = line.substring(index5 + 1);
+                int index4 = line.lastIndexOf(';', index5 - 1);
+                String taste = line.substring(index4 + 1, index5);
+                List<String> ingredients = Arrays.asList(line.substring(index3 + 1, index4).split(","));
+                Cocktail cocktail = new Cocktail(drink, category, glassware, ingredients, taste, preparation);
+                recipeMap.put(drink, cocktail);
             }
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return null;
+        return recipeMap;
     }
 
     @Override
     public Map<String, Integer> initializePopularity(Map<String, Cocktail> recipeMap) {
-        // TODO: implement
-        return null;
+        Map<String, Integer> popularityMap = new TreeMap<>();
+        for (String s: recipeMap.keySet()){
+            if (!popularityMap.containsKey(s)){
+                popularityMap.put(s, 0);
+            } else {
+                popularityMap.put(s, popularityMap.get(s) + 1);
+            }
+        }
+        return popularityMap;
     }
 
     @Override
-    public Map<String, String> buildIndexByPreference(Map<String, Cocktail> recipeMap) {
-        // TODO: implement
-        return null;
+    public Map<String, List<Cocktail>> buildIndexByPreference(Map<String, Cocktail> recipeMap) {
+        Map<String, List<Cocktail>> preferenceMap = new HashMap<>();
+        for (Cocktail cocktail: recipeMap.values()){
+            String taste = cocktail.getTaste();
+            if (!preferenceMap.containsKey(taste)){
+                preferenceMap.put(taste, new ArrayList<>());
+            }
+            preferenceMap.get(taste).add(cocktail);
+        }
+        return preferenceMap;
     }
 
     @Override
     public Cocktail queryByDrink(String drink, Map<String, Cocktail> recipeMap,
                                  Map<String, Integer> popularityMap) {
-        // TODO: implement
-        return null;
+        if (!recipeMap.containsKey(drink)){
+            System.out.printf("We are sorry %s is not available currently, please try other drinks.", drink);
+        }
+        Cocktail cocktail = recipeMap.get(drink);
+        popularityMap.put(drink, popularityMap.get(drink) + 1);
+        return cocktail;
     }
 
     @Override
@@ -67,6 +79,8 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
+    // First, convert the popularity map (general map) to a sorted set(sort by value) e.g. SortedSet<Pair<String, Integer>>
+    // Then choose top xx drinks
     public String recommendByPopularity(Map<String, Integer> popularityMap) {
         // TODO: implement
         return null;
@@ -74,14 +88,14 @@ public class CocktailRecommender implements ICocktailRecommender {
 
     @Override
     public String recommendByPreference(String taste,
-                                        Map<String, String> preferenceMap) {
+                                        Map<String, List<Cocktail>> preferenceMap) {
         // TODO: implement
         return null;
     }
 
     @Override
     public Cocktail recommend(String taste,
-                              Map<String, String> preferenceMap,
+                              Map<String, List<Cocktail>> preferenceMap,
                               Map<String, Integer> popularityMap,
                               Map<String, Cocktail> recipeMap) {
         // TODO: implement
