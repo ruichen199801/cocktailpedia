@@ -6,7 +6,10 @@ import java.util.*;
  */
 
 public class CocktailRecommender implements ICocktailRecommender {
-
+    public static void main(String[] args) {
+        String file = "./datasets/cocktail_df_cleaned.txt";
+        Map<String, Cocktail> map = new CocktailRecommender().loadDataset(file);
+    }
     // fields
     Map<String, Cocktail> _recipeMap;
     Map<String, Integer> _popularityMap;
@@ -15,7 +18,7 @@ public class CocktailRecommender implements ICocktailRecommender {
     public Map<String, Cocktail> loadDataset(String path) {
         Map<String, Cocktail> recipeMap = new HashMap<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("./datasets/cocktail_df_cleaned.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
             String line = null;
             while ((line = br.readLine()) != null){
                 int index1 = line.indexOf(';');
