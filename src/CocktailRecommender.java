@@ -14,6 +14,8 @@ public class CocktailRecommender implements ICocktailRecommender {
     Map<String, Cocktail> _recipeMap;
     Map<String, Integer> _popularityMap;
 
+    Map<String, List<Cocktail>> _preferenceMap;
+
     @Override
     public Map<String, Cocktail> loadDataset(String path) {
         Map<String, Cocktail> recipeMap = new HashMap<>();
@@ -73,6 +75,10 @@ public class CocktailRecommender implements ICocktailRecommender {
             }
             preferenceMap.get(taste).add(cocktail);
         }
+
+        // update preferenceMap
+        _preferenceMap = preferenceMap;
+
         return preferenceMap;
     }
 
@@ -157,13 +163,15 @@ public class CocktailRecommender implements ICocktailRecommender {
         } else if (option == 4) {
             // first get preference map
             List<Cocktail> list = preferenceMap.get(taste);
-            // then find the most popular one
-            int max = Integer.MIN_VALUE;
-            for (Cocktail cocktail : list) {
-                int curPopularity = popularityMap.get(cocktail.getDrink());
-                if (curPopularity > max) {
-                    max = curPopularity;
-                    drink = cocktail.getDrink();
+            if (list != null && list.size() != 0) {
+                // then find the most popular one
+                int max = Integer.MIN_VALUE;
+                for (Cocktail cocktail : list) {
+                    int curPopularity = popularityMap.get(cocktail.getDrink());
+                    if (curPopularity > max) {
+                        max = curPopularity;
+                        drink = cocktail.getDrink();
+                    }
                 }
             }
         }
