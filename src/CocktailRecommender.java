@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -6,11 +7,37 @@ import java.util.Map;
  */
 
 public class CocktailRecommender implements ICocktailRecommender {
-
+    public static void main(String[] args) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File("./datasets/cocktail_df_cleaned.csv")));
+            String line = br.readLine();
+            line = br.readLine();
+            int index1 = line.indexOf(',');
+            System.out.println(line.substring(0, index1));
+            int index2 = line.indexOf(',', index1 + 1);
+            System.out.println(line.substring(index1 + 1, index2));
+            int index3 = line.indexOf(',', index2 + 1);
+            System.out.println(line.substring(index2 + 1, index3));
+            int index5 = line.lastIndexOf('\"');
+            System.out.println(line.substring(index5 + 1));
+            int index4 = line.lastIndexOf(',', index5 - 1);
+            System.out.println(line.substring(index4 + 1, index5));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public Map<String, Cocktail> loadDataset(String path) {
-        // TODO: implement
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File("./datasets/cocktail_df_cleaned.csv")));
+            String line = null;
+            while ((line = br.readLine()) != null){
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
