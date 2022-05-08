@@ -55,6 +55,18 @@ public class Trie {
         }
         return index;
     }
+    public String parse(String word){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(Character.isLetterOrDigit(ch)){
+                sb.append(Character.toLowerCase(ch));
+            } else if(ch == ' '){
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
     public void addWord(String word){
         if(word == null || word.length() == 0){
             return ;
