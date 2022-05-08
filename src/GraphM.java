@@ -41,6 +41,10 @@ public class GraphM {
         return matrix[u][v] != 0;
     }
 
+    public double getEdge(int u, int v) {
+        return matrix[u][v];
+    }
+
     //Returns an array of indices of nodes adjacent to the given node
     public int[] neighbors(int u){
         int num = 0, n = nodesCount();
