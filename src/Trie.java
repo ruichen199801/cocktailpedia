@@ -71,6 +71,7 @@ public class Trie {
         if(word == null || word.length() == 0){
             return ;
         }
+        word = parse(word);
         Trie p = this;
         for(int i = 0; i < word.length(); i++){
             char ch = word.charAt(i);
