@@ -1,4 +1,3 @@
-
 import javafx.util.Pair;
 
 import java.io.*;
@@ -10,16 +9,24 @@ import java.util.*;
  */
 
 public class CocktailRecommender implements ICocktailRecommender {
+    public static void main(String[] args) {
+        String path = "./datasets/cocktail_df_cleaned.txt";
+        CocktailRecommender cocktailRecommender = new CocktailRecommender();
+        Map<String, Cocktail> map = cocktailRecommender.loadDataset(path);
+    }
     // fields
     private Map<String, Cocktail> recipeMap;
     private Map<String, Integer> popularityMap;
     private Map<String, List<Cocktail>> preferenceMap;
     private GraphM graphM;
+    private Trie root;
 
-    public CocktailRecommender(){
+
+    public CocktailRecommender() {
         recipeMap = new HashMap<>();
         popularityMap = new HashMap<>();
         preferenceMap = new HashMap<>();
+        root = new Trie();
     }
 
     @Override
@@ -27,19 +34,29 @@ public class CocktailRecommender implements ICocktailRecommender {
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(path)));
             String line = null;
-            while ((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 int index1 = line.indexOf(';');
-                String drink = line.substring(0, index1).toLowerCase();
+                String drink = convertDrinkName(line.substring(0, index1)).toLowerCase();
+                root.addWord(drink);
+
                 int index2 = line.indexOf(';', index1 + 1);
                 String category = line.substring(index1 + 1, index2).toLowerCase();
+
                 int index3 = line.indexOf(';', index2 + 1);
                 String glassware = line.substring(index2 + 1, index3).toLowerCase();
-                int index5 = line.lastIndexOf(';');
-                String preparation = line.substring(index5 + 1);
-                int index4 = line.lastIndexOf(';', index5 - 1);
-                String taste = line.substring(index4 + 1, index5).toLowerCase();
+
+                int index4 = line.indexOf(';', index3 + 1);
                 List<String> ingredients = Arrays.asList(line.substring(index3 + 1, index4).toLowerCase().split(","));
-                Cocktail cocktail = new Cocktail(drink, category, glassware, ingredients, taste, preparation);
+
+                int index5 = line.indexOf(';', index4 + 1);
+                String taste = line.substring(index4 + 1, index5).toLowerCase();
+
+                int index6 = line.lastIndexOf(';');
+                String preparation = line.substring(index5 + 1, index6);
+
+                int price = Integer.parseInt(line.substring(index6 + 1));
+
+                Cocktail cocktail = new Cocktail(drink, category, glassware, ingredients, taste, preparation, price);
                 recipeMap.put(drink, cocktail);
             }
             br.close();
@@ -50,9 +67,29 @@ public class CocktailRecommender implements ICocktailRecommender {
         return recipeMap;
     }
 
+    private String convertDrinkName(String word){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(Character.isAlphabetic(ch)){
+                ch = Character.toLowerCase(ch);
+                if (ch - 'a' < 26 && ch - 'a' >= 0){
+                    sb.append(ch);
+                }
+            } else if (Character.isDigit(ch)){
+                sb.append(ch);
+            } else if(ch == ' '){
+                sb.append(ch);
+            } else if (ch == '-'){
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+
     private Map<String, Integer> initializePopularity() {
-        for (String s: recipeMap.keySet()){
-            if (!popularityMap.containsKey(s)){
+        for (String s : recipeMap.keySet()) {
+            if (!popularityMap.containsKey(s)) {
                 popularityMap.put(s, 0);
             } else {
                 popularityMap.put(s, popularityMap.get(s) + 1);
@@ -64,9 +101,9 @@ public class CocktailRecommender implements ICocktailRecommender {
     @Override
     public Map<String, List<Cocktail>> buildIndexByPreference() {
 
-        for (Cocktail cocktail: recipeMap.values()){
+        for (Cocktail cocktail : recipeMap.values()) {
             String taste = cocktail.getTaste();
-            if (!preferenceMap.containsKey(taste)){
+            if (!preferenceMap.containsKey(taste)) {
                 preferenceMap.put(taste, new ArrayList<>());
             }
             preferenceMap.get(taste).add(cocktail);
@@ -76,7 +113,7 @@ public class CocktailRecommender implements ICocktailRecommender {
 
     @Override
     public Cocktail queryByDrink(String drink) {
-        if (!recipeMap.containsKey(drink)){
+        if (!recipeMap.containsKey(drink)) {
             System.out.printf("We are sorry %s is not available currently, please try other drinks.", drink);
         }
         Cocktail cocktail = recipeMap.get(drink.toLowerCase());
@@ -94,13 +131,13 @@ public class CocktailRecommender implements ICocktailRecommender {
     // First, convert the popularity map (general map) to a sorted set(sort by value) e.g. SortedSet<Pair<String, Integer>>
     // Then choose top xx drinks
     public List<String> recommendByPopularity() {
-        SortedSet<Pair<String, Integer>>  set = new TreeSet<>(createComparator());
-        for (Map.Entry<String, Integer> entry: popularityMap.entrySet()){
+        SortedSet<Pair<String, Integer>> set = new TreeSet<>(createComparator());
+        for (Map.Entry<String, Integer> entry : popularityMap.entrySet()) {
             set.add(new Pair<>(entry.getKey(), entry.getValue()));
         }
         List<String> recommendation = new ArrayList<>();
-        for (Pair<String, Integer> pair: set){
-            if (recommendation.size() <= 5){
+        for (Pair<String, Integer> pair : set) {
+            if (recommendation.size() <= 5) {
                 recommendation.add(pair.getKey());
             } else {
                 break;
@@ -112,21 +149,21 @@ public class CocktailRecommender implements ICocktailRecommender {
     @Override
     public List<String> recommendByPreference(String taste) {
         List<Cocktail> tastes = preferenceMap.get(taste);
-        SortedSet<Pair<String, Integer>>  set = new TreeSet<>(createComparator());
-        for (Cocktail cocktail: tastes){
+        SortedSet<Pair<String, Integer>> set = new TreeSet<>(createComparator());
+        for (Cocktail cocktail : tastes) {
             set.add(new Pair<>(cocktail.getDrink(), popularityMap.get(cocktail.getDrink())));
         }
         List<String> recommendation = new ArrayList<>();
-        if (set.size() > 5){
-            for (Pair<String, Integer> pair: set){
-                if (recommendation.size() <= 5){
+        if (set.size() > 5) {
+            for (Pair<String, Integer> pair : set) {
+                if (recommendation.size() <= 5) {
                     recommendation.add(pair.getKey());
                 } else {
                     break;
                 }
             }
         } else {
-            for (Pair<String, Integer> pair: set){
+            for (Pair<String, Integer> pair : set) {
                 recommendation.add(pair.getKey());
             }
         }
@@ -215,30 +252,30 @@ public class CocktailRecommender implements ICocktailRecommender {
             case 4:
                 List<String> pops = recommendByPopularity();
                 List<String> recommendation = new ArrayList<>();
-                for (String s: pops){
+                for (String s : pops) {
                     String taste1 = recipeMap.get(s).getTaste();
-                    if (taste1.equals(taste)){
-                        if (recommendation.size() <= 5){
+                    if (taste1.equals(taste)) {
+                        if (recommendation.size() <= 5) {
                             recommendation.add(s);
                         } else {
                             break;
                         }
                     }
                 }
-                return  recommendation;
+                return recommendation;
             default:
-                return  recommendByClassic();
+                return recommendByClassic();
         }
     }
 
     @Override
     public boolean customizeRecipe(String username,
-                                String drink, List<String> ingredients, String style,
-                                String path) {
+                                   String drink, List<String> ingredients, String style,
+                                   String path) {
         Recipe recipe = new Recipe(drink, ingredients, style);
         //create the new directory of this user if it does not exist
         File dir = new File(path + "/" + username);
-        if(!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdir();
         }
         //create new file used to store user's customized recipe
@@ -260,7 +297,7 @@ public class CocktailRecommender implements ICocktailRecommender {
             myWriter.write(content);
             myWriter.close();
             saved = true;
-        } catch (IOException e){
+        } catch (IOException e) {
             e.getStackTrace();
         }
         return saved;
@@ -290,11 +327,11 @@ public class CocktailRecommender implements ICocktailRecommender {
         this.preferenceMap = preferenceMap;
     }
 
-    private Comparator<Pair<String, Integer>> createComparator(){
+    private Comparator<Pair<String, Integer>> createComparator() {
         return new Comparator<Pair<String, Integer>>() {
             @Override
             public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
-                if (o1.getValue().equals(o2.getValue())){
+                if (o1.getValue().equals(o2.getValue())) {
                     return o1.getKey().compareTo(o2.getKey());
                 } else {
                     return o2.getValue().compareTo(o1.getValue());
