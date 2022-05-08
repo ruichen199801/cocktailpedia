@@ -117,5 +117,11 @@ public interface ICocktailRecommender {
     boolean customizeRecipe(String username,
                                 String drink, List<String> ingredients, String style,
                                 String path);
-  
+
+    /**
+     * Allow a user to order the drink
+     * @param drink       name of drink entered by user
+     * @return price of the drink
+     */
+    int order (String drink);
 }

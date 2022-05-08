@@ -302,6 +302,12 @@ public class CocktailRecommender implements ICocktailRecommender {
         return saved;
     }
 
+    @Override
+    public int order (String drink){
+        Cocktail cocktail = recipeMap.get(drink);
+        return cocktail.getPrice();
+    }
+
     public Map<String, Cocktail> getRecipeMap() {
         return recipeMap;
     }

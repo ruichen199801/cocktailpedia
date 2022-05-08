@@ -102,23 +102,23 @@ public class CocktailRecommenderTest {
         assertTrue(cur.contains("3-mile long island iced tea"));
     }
 
-//    @Test
-//    public void testCustomizeRecipe() {
-//        //get user customized recipe
-//        List<String> ingredients = new ArrayList<>();
-//        ingredients.add("brandy");
-//        Recipe r1 = new Recipe("rainbow", ingredients, "shake");
-//        String username1 = "Tom";
-//        //create new directory with recipe text file
-//        cr.customizeRecipe("Tom", r1.getDrink(), r1.getIngredients(), r1.getStyle(), path);
-//        File users = new File(path);
-//        Set<String> files = new HashSet<>(Arrays.asList(users.list()));
-//        //test whether the directory exist
-//        assertTrue(files.contains(username1));
-//        String recipePath = path + "/" + username1 + "/recipe.txt";
-//        //test recipe file exist
-//        File f = new File(recipePath);
-//        assertTrue(f.exists());
-//    }
+    @Test
+    public void testCustomizeRecipe() {
+        //get user customized recipe
+        List<String> ingredients = new ArrayList<>();
+        ingredients.add("brandy");
+        Recipe r1 = new Recipe("rainbow", ingredients, "shake");
+        String username1 = "Tom";
+        //create new directory with recipe text file
+        cr.customizeRecipe("Tom", r1.getDrink(), r1.getIngredients(), r1.getStyle(), path);
+        File users = new File(path);
+        Set<String> files = new HashSet<>(Arrays.asList(users.list()));
+        //test whether the directory exist
+        assertTrue(files.contains(username1));
+        String recipePath = path + "/" + username1 + "/recipe.txt";
+        //test recipe file exist
+        File f = new File(recipePath);
+        assertTrue(f.exists());
+    }
 
 }
