@@ -34,6 +34,7 @@ public class CocktailRecommenderTest {
         assertEquals("Margarita/Coupette glass".toLowerCase(), cocktail.getGlassware());
         assertEquals("Lemon Juice".toLowerCase(), cocktail.getIngredients().get(0));
         assertEquals("sour", cocktail.getTaste());
+        assertEquals(20, cocktail.getPrice());
     }
 
     @Test

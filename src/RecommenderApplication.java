@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,8 @@ public class RecommenderApplication {
                             System.out.println("Please define the drink of the cocktail.");
                             String drink = sc.next();
                             System.out.println("Please define the ingredients of the cocktail. Separate by comma.");
-                            String ingredients = sc.next();
+                            List<String> ingredients = new ArrayList<>();
+                            ingredients.add(sc.next());
                             System.out.println("Please define the style of the cocktail.");
                             String style = sc.next();
                             List<String> ingredientsList = Arrays.asList(ingredients.toLowerCase().split(","));
