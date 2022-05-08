@@ -13,11 +13,13 @@ public class CocktailRecommender implements ICocktailRecommender {
     private Map<String, Cocktail> recipeMap;
     private Map<String, Integer> popularityMap;
     private Map<String, List<Cocktail>> preferenceMap;
+    private Trie root;
 
     public CocktailRecommender() {
         recipeMap = new HashMap<>();
         popularityMap = new HashMap<>();
         preferenceMap = new HashMap<>();
+        root = new Trie();
     }
 
     @Override
@@ -27,7 +29,8 @@ public class CocktailRecommender implements ICocktailRecommender {
             String line = null;
             while ((line = br.readLine()) != null) {
                 int index1 = line.indexOf(';');
-                String drink = line.substring(0, index1).toLowerCase();
+                String drink = convertDrinkName(line.substring(0, index1)).toLowerCase();
+                root.addWord(drink);
 
                 int index2 = line.indexOf(';', index1 + 1);
                 String category = line.substring(index1 + 1, index2).toLowerCase();
@@ -55,6 +58,21 @@ public class CocktailRecommender implements ICocktailRecommender {
         }
         initializePopularity();
         return recipeMap;
+    }
+
+    private String convertDrinkName(String word){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(Character.isLetterOrDigit(ch)){
+                sb.append(Character.toLowerCase(ch));
+            } else if(ch == ' '){
+                sb.append(ch);
+            } else if (ch == '-'){
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
     }
 
     private Map<String, Integer> initializePopularity() {

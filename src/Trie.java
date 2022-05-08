@@ -23,7 +23,7 @@ public class Trie {
     String drink;
 
     public Trie(){
-        children = new Trie[37];
+        children = new Trie[38];
         end = false;
     }
     public Trie[] getChildren(){
@@ -52,6 +52,8 @@ public class Trie {
             index = ch - '0' + 26;
         } else if(ch == ' '){
             index = 36;
+        } else if (ch == '-'){
+            index = 37;
         }
         return index;
     }
@@ -62,6 +64,8 @@ public class Trie {
             if(Character.isLetterOrDigit(ch)){
                 sb.append(Character.toLowerCase(ch));
             } else if(ch == ' '){
+                sb.append(ch);
+            } else if (ch == '-'){
                 sb.append(ch);
             }
         }
