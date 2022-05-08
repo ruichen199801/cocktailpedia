@@ -41,9 +41,9 @@ public class CocktailRecommender implements ICocktailRecommender {
                 int index5 = line.indexOf(';', index4 + 1);
                 String taste = line.substring(index4 + 1, index5).toLowerCase();
 
-//                int index6 = line.indexOf(';', index5 + 1);
                 int index6 = line.lastIndexOf(';');
                 String preparation = line.substring(index5 + 1, index6);
+
                 int price = Integer.parseInt(line.substring(index6 + 1));
 
                 Cocktail cocktail = new Cocktail(drink, category, glassware, ingredients, taste, preparation, price);
