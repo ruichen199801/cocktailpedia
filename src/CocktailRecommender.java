@@ -112,13 +112,12 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public Cocktail queryByDrink(String drink) {
-        if (!recipeMap.containsKey(drink)) {
+    public List<String> queryByDrink(String drink) {
+        List<String> query = root.queryByPrefix(drink);
+        if (query.size() == 0) {
             System.out.printf("We are sorry %s is not available currently, please try other drinks.", drink);
         }
-        Cocktail cocktail = recipeMap.get(drink.toLowerCase());
-        popularityMap.put(drink, popularityMap.get(drink) + 1);
-        return cocktail;
+        return query;
     }
 
     @Override
@@ -301,6 +300,12 @@ public class CocktailRecommender implements ICocktailRecommender {
             e.getStackTrace();
         }
         return saved;
+    }
+
+    @Override
+    public int order (String drink){
+        Cocktail cocktail = recipeMap.get(drink);
+        return cocktail.getPrice();
     }
 
     public Map<String, Cocktail> getRecipeMap() {
