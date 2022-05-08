@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -67,25 +66,39 @@ public class CocktailRecommenderTest {
 
     @Test
     public void testRecommendByClassic() {
-//        String curDrink = cr.recommendByClassic();
-//        List<String> CLASSIC = Arrays.asList
-//                ("old fashioned", "negroni", "daiquiri", "dry martini", "whiskey sour");
-//        assertTrue(CLASSIC.contains(curDrink));
+        List<String> cur = cr.recommendByClassic();
+        assertTrue(cur.contains("old fashioned"));
     }
 
     @Test
     public void testRecommendByPopularity() {
-        // TODO: implement
+        List<String> cur = cr.recommendByPopularity();
+        assertTrue(cur.contains("1-900-fuk-meup"));
     }
 
     @Test
     public void testRecommendByPreference() {
-        // TODO: implement
+        List<String> cur = cr.recommendByPreference("sour");
+        assertTrue(cur.contains("3-mile long island iced tea"));
     }
 
     @Test
     public void testRecommend() {
-        // TODO: implement
+        List<String> cur = cr.recommend("sour", 1);
+        assertTrue(cur.contains("old fashioned"));
+
+        cur = cr.recommend("sour", 2);
+        assertTrue(cur.contains("1-900-fuk-meup"));
+        assertTrue(cur.contains("151 florida bushwacker"));
+
+        cur = cr.recommend("sour", 3);
+        assertTrue(cur.contains("69 special"));
+        assertTrue(cur.contains("a furlong too late"));
+        assertTrue(cur.contains("a piece of ass"));
+        assertTrue(cur.contains("a splash of nash"));
+
+        cur = cr.recommend("sour", 4);
+        assertTrue(cur.contains("3-mile long island iced tea"));
     }
 
     @Test
