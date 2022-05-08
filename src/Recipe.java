@@ -16,7 +16,7 @@ public class Recipe {
      * ingredients: a list of ingredients of the drink
      * e.g. Rum + Cranberry Juice + Pineapple Juice
      */
-    private List<String> ingredients;
+    private String ingredients;
 
     /**
      * style: preparation style of the drink
@@ -32,7 +32,7 @@ public class Recipe {
         this.drink = drink;
     }
 
-    public Recipe(String drink, List<String> ingredients, String style) {
+    public Recipe(String drink, String ingredients, String style) {
         this.drink = drink;
         this.ingredients = ingredients;
         this.style = style;
