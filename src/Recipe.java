@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * The class for a user-customized cocktail recipe.
  */
@@ -14,7 +16,7 @@ public class Recipe {
      * ingredients: a list of ingredients of the drink
      * e.g. Rum + Cranberry Juice + Pineapple Juice
      */
-    private String ingredients;
+    private List<String> ingredients;
 
     /**
      * style: preparation style of the drink
@@ -30,7 +32,7 @@ public class Recipe {
         this.drink = drink;
     }
 
-    public Recipe(String drink, String ingredients, String style) {
+    public Recipe(String drink, List<String> ingredients, String style) {
         this.drink = drink;
         this.ingredients = ingredients;
         this.style = style;
@@ -48,11 +50,11 @@ public class Recipe {
         this.drink = drink;
     }
 
-    public String getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(String ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
