@@ -101,23 +101,4 @@ public class Trie {
         }
         return ans;
     }
-    public static void main(String[] args){
-        Trie root = new Trie();
-        root.addWord("tr123");
-        root.addWord("transform");
-        root.addWord("tree");
-        root.addWord("toy");
-        root.addWord("ti");
-        for(int i = 0; i < 37; i++){
-            if(root.children[i] != null){
-                System.out.println(i);
-            }
-        }
-        Trie c1 = root.children[19];
-        for(int i = 0; i < 37; i++){
-            if(c1.children[i] != null){
-                System.out.println(i);
-            }
-        }
-    }
 }
