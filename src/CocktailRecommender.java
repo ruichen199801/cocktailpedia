@@ -381,7 +381,9 @@ public class CocktailRecommender implements ICocktailRecommender {
 
     @Override
     public int order (String drink){
+        drink = convertDrinkName(drink);
         Cocktail cocktail = recipeMap.get(drink);
+        popularityMap.put(drink, popularityMap.get(drink) + 1);
         return cocktail.getPrice();
     }
 
