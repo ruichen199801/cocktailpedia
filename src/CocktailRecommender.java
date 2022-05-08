@@ -170,7 +170,7 @@ public class CocktailRecommender implements ICocktailRecommender {
 
     @Override
     public boolean customizeRecipe(String username,
-                                String drink, String ingredients, String style,
+                                String drink, List<String> ingredients, String style,
                                 String path) {
         Recipe recipe = new Recipe(drink, ingredients, style);
         //create the new directory of this user if it does not exist
