@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -60,7 +61,8 @@ public class RecommenderApplication {
                             String ingredients = sc.next();
                             System.out.println("Please define the style of the cocktail.");
                             String style = sc.next();
-                            boolean saved = cr.customizeRecipe(username, drink, ingredients, style, path);
+                            List<String> ingredientsList = Arrays.asList(ingredients.toLowerCase().split(","));
+                            boolean saved = cr.customizeRecipe(username, drink, ingredientsList, style, path);
                             if(saved){
                                 System.out.println("Your recipe has been successfully saved!");
                             } else {

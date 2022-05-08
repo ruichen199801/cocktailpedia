@@ -109,7 +109,7 @@ public interface ICocktailRecommender {
      * @return whether the recipe has been successfully saved.
      */
     public boolean customizeRecipe(String username,
-                                String drink, String ingredients, String style,
+                                String drink, List<String> ingredients, String style,
                                 String path);
 
 }
