@@ -189,6 +189,14 @@ public class CocktailRecommender implements ICocktailRecommender {
         //create new file used to store user's customized recipe
         File f = new File(dir.getPath() + "/recipe.txt");
         boolean saved = false;
+        String s = "";
+        for (int i = 0; i < ingredients.size(); i++){
+            if (i == ingredients.size() - 1){
+                s += ingredients.get(i);
+            } else {
+                s += ingredients.get(i) + ", ";
+            }
+        }
         try {
             FileWriter myWriter = new FileWriter(f.getPath(), true);
             String content = username + " designed a new recipe named " + drink +
