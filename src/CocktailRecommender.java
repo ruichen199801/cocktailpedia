@@ -9,6 +9,11 @@ import java.util.*;
  */
 
 public class CocktailRecommender implements ICocktailRecommender {
+    public static void main(String[] args) {
+        String path = "./datasets/cocktail_df_cleaned.txt";
+        CocktailRecommender cocktailRecommender = new CocktailRecommender();
+        Map<String, Cocktail> map = cocktailRecommender.loadDataset(path);
+    }
     // fields
     private Map<String, Cocktail> recipeMap;
     private Map<String, Integer> popularityMap;
@@ -64,8 +69,13 @@ public class CocktailRecommender implements ICocktailRecommender {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < word.length(); i++){
             char ch = word.charAt(i);
-            if(Character.isLetterOrDigit(ch)){
-                sb.append(Character.toLowerCase(ch));
+            if(Character.isAlphabetic(ch)){
+                ch = Character.toLowerCase(ch);
+                if (ch - 'a' < 26 && ch - 'a' >= 0){
+                    sb.append(ch);
+                }
+            } else if (Character.isDigit(ch)){
+                sb.append(ch);
             } else if(ch == ' '){
                 sb.append(ch);
             } else if (ch == '-'){
