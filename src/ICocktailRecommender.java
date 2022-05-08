@@ -87,7 +87,17 @@ public interface ICocktailRecommender {
      * @param target the target drink.
      * @return the list of the vertex which represent the shortest path, first node is source and last is target.
      */
-    public List<Integer>  recommendByDijkstra(int source, int target);
+    public List<Integer> recommendByDijkstra(int source, int target);
+
+    /**
+     * Recommend cocktails by using Dijkstra based on constructed graph,
+     * and return the list of the vertex which represent the shortest path.
+     *
+     * @param source the source drink.
+     * @param target the target drink.
+     * @return the prize of sum of all drinks recommended.
+     */
+    public Double prizeOfDijkstra(int source, int target);
 
     /**
      * Return the recommended cocktail recipe to users based on users' options:
