@@ -1,7 +1,9 @@
+
 import javafx.util.Pair;
 
 import java.io.*;
 import java.util.*;
+
 
 /**
  * The implementation class for cocktail recommender.
@@ -167,45 +169,29 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public void customizeRecipe(String username) {
-        // TODO: implement
-    }
-
-    public Map<String, Cocktail> getRecipeMap() {
-        return recipeMap;
-    }
-
-    public void setRecipeMap(Map<String, Cocktail> recipeMap) {
-        this.recipeMap = recipeMap;
-    }
-
-    public Map<String, Integer> getPopularityMap() {
-        return popularityMap;
-    }
-
-    public void setPopularityMap(Map<String, Integer> popularityMap) {
-        this.popularityMap = popularityMap;
-    }
-
-    public Map<String, List<Cocktail>> getPreferenceMap() {
-        return preferenceMap;
-    }
-
-    public void setPreferenceMap(Map<String, List<Cocktail>> preferenceMap) {
-        this.preferenceMap = preferenceMap;
-    }
-
-    private Comparator<Pair<String, Integer>> createComparator() {
-
-        return new Comparator<Pair<String, Integer>>() {
-            @Override
-            public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
-                if (o1.getValue().equals(o2.getValue())){
-                    return o1.getKey().compareTo(o2.getKey());
-                } else {
-                    return o1.getValue().compareTo(o2.getValue());
-                }
-            }
-        };
+    public boolean customizeRecipe(String username,
+                                String drink, String ingredients, String style,
+                                String path) {
+        Recipe recipe = new Recipe(drink, ingredients, style);
+        //create the new directory of this user if it does not exist
+        File dir = new File(path + "/" + username);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        //create new file used to store user's customized recipe
+        File f = new File(dir.getPath() + "/recipe.txt");
+        boolean saved = false;
+        try {
+            FileWriter myWriter = new FileWriter(f.getPath(), true);
+            String content = username + " designed a new recipe named " + drink +
+                    " with " + ingredients + " as base ingredients, in the " +
+                    style + " style.\n";
+            myWriter.write(content);
+            myWriter.close();
+            saved = true;
+        } catch (IOException e){
+            e.getStackTrace();
+        }
+        return saved;
     }
 }
