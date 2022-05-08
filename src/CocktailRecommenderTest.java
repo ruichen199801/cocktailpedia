@@ -58,10 +58,11 @@ public class CocktailRecommenderTest {
     public void testQueryByDrink() {
         CocktailRecommender cocktailRecommender = new CocktailRecommender();
         Map<String, Cocktail> receipe = cocktailRecommender.loadDataset(path);
-        Cocktail cocktail = cocktailRecommender.queryByDrink("White Lady".toLowerCase());
-        assertEquals("Ordinary Drink".toLowerCase().toLowerCase(), cocktail.getCategory());
-        assertEquals("Cocktail glass".toLowerCase(), cocktail.getGlassware());
-        assertEquals("sour", cocktail.getTaste());
+        List<String> cocktail = cocktailRecommender.queryByDrink("Vodka".toLowerCase());
+        assertTrue(cocktail.contains("Vodka And Tonic".toLowerCase()));
+        assertTrue(cocktail.contains("Vodka Fizz".toLowerCase()));
+        assertTrue(cocktail.contains("Vodka Martini".toLowerCase()));
+        assertTrue(cocktail.contains("Vodka Russian".toLowerCase()));
     }
 
     @Test
