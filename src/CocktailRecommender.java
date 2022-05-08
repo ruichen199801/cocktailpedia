@@ -18,7 +18,9 @@ public class CocktailRecommender implements ICocktailRecommender {
     private Map<String, Cocktail> recipeMap;
     private Map<String, Integer> popularityMap;
     private Map<String, List<Cocktail>> preferenceMap;
+    private GraphM graphM;
     private Trie root;
+
 
     public CocktailRecommender() {
         recipeMap = new HashMap<>();
@@ -165,6 +167,68 @@ public class CocktailRecommender implements ICocktailRecommender {
             }
         }
         return recommendation;
+    }
+
+    @Override
+    public List<Integer>  recommendByDijkstra(int source, int target) {
+        // run Dijkstra
+
+        // get number of nodes
+        int n = graphM.nodesCount();
+
+        // create shortest array and pred array
+        double[] shortest = new double[n];
+        int[] pred = new int[n];
+
+        // initialize
+        Arrays.fill(shortest, Integer.MAX_VALUE);
+        Arrays.fill(pred, -1);
+
+        // update shortest[source]
+        shortest[source] = 0;
+
+        // create a set to maintain the node who are not expanded
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            set.add(i);
+        }
+
+        // iterate to expanded node
+        while (!set.isEmpty()) {
+            Integer curNode = Collections.min(set);
+            for (Integer integer : set) {
+                if (shortest[integer] < shortest[curNode]) {
+                    curNode = integer;
+                }
+            }
+            if (shortest[curNode] == Integer.MAX_VALUE) {
+                break;
+            }
+            int[] neighbors = graphM.neighbors(curNode);
+            for (int neighbor : neighbors) {
+                if (shortest[neighbor] > shortest[curNode] + graphM.getEdge(curNode, neighbor)) {
+                    shortest[neighbor] = shortest[curNode] + graphM.getEdge(curNode, neighbor);
+                    pred[neighbor] = curNode;
+                }
+            }
+            set.remove(curNode);
+        }
+
+        // return value
+        if (pred[target] == -1) {
+            return new ArrayList<>();
+        }
+
+        // find the shortest path
+        List<Integer> res = new ArrayList<>();
+        res.add(target);
+
+        while (target != source) {
+            res.add(pred[target]);
+            target = pred[target];
+        }
+        Collections.reverse(res);
+        return res;
     }
 
     @Override
