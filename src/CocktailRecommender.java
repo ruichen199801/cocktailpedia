@@ -20,6 +20,7 @@ public class CocktailRecommender implements ICocktailRecommender {
     private Map<String, List<Cocktail>> preferenceMap;
     private GraphM graphM;
     private Trie root;
+    private Cocktail[] cocktails;
 
 
     public CocktailRecommender() {
@@ -27,6 +28,43 @@ public class CocktailRecommender implements ICocktailRecommender {
         popularityMap = new HashMap<>();
         preferenceMap = new HashMap<>();
         root = new Trie();
+        graphM = new GraphM(10);
+        // 0 1
+        graphM.addEdge(0, 1, 0.82);
+        graphM.addEdge(1, 0, 0.82);
+        // 1 2
+        graphM.addEdge(1, 2, 0.57);
+        graphM.addEdge(2, 1, 0.57);
+        // 1 4
+        graphM.addEdge(1, 4, 0.89);
+        graphM.addEdge(4, 1, 0.89);
+        // 0 3
+        graphM.addEdge(0, 3, 0.75);
+        graphM.addEdge(3, 0, 0.75);
+        // 3 4
+        graphM.addEdge(3, 4, 0.96);
+        graphM.addEdge(4, 3, 0.96);
+        // 3 8
+        graphM.addEdge(3, 8, 0.52);
+        graphM.addEdge(8, 3, 0.52);
+        // 0 5
+        graphM.addEdge(0, 5, 0.66);
+        graphM.addEdge(5, 0, 0.66);
+        // 5 6
+        graphM.addEdge(5, 6, 0.98);
+        graphM.addEdge(6, 5, 0.98);
+        // 4 9
+        graphM.addEdge(4, 9, 0.65);
+        graphM.addEdge(9, 4, 0.65);
+        // 2 8
+        graphM.addEdge(2, 8, 0.73);
+        graphM.addEdge(8, 2, 0.73);
+        // 5 7
+        graphM.addEdge(5, 7, 0.72);
+        graphM.addEdge(7, 5, 0.72);
+        // 5 9
+        graphM.addEdge(5, 9, 0.68);
+        graphM.addEdge(9, 5, 0.68);
     }
 
     @Override
@@ -64,6 +102,20 @@ public class CocktailRecommender implements ICocktailRecommender {
             e.printStackTrace();
         }
         initializePopularity();
+        // update cocktail array
+        cocktails = new Cocktail[10];
+        int i = 0;
+        cocktails[i++] = recipeMap.get("old fashioned".toLowerCase());
+        cocktails[i++] = recipeMap.get("Long Island Iced Tea".toLowerCase());
+        cocktails[i++] = recipeMap.get("daiquiri".toLowerCase());
+        cocktails[i++] = recipeMap.get("martini".toLowerCase());
+        cocktails[i++] = recipeMap.get("whiskey sour".toLowerCase());
+        cocktails[i++] = recipeMap.get("1-900-FUK-MEUP".toLowerCase());
+        cocktails[i++] = recipeMap.get("69 Special".toLowerCase());
+        cocktails[i++] = recipeMap.get("A Piece of Ass".toLowerCase());
+        cocktails[i++] = recipeMap.get("Vodka And Tonic".toLowerCase());
+        cocktails[i++] = recipeMap.get("Tequila Fizz".toLowerCase());
+
         return recipeMap;
     }
 
@@ -231,6 +283,31 @@ public class CocktailRecommender implements ICocktailRecommender {
         return res;
     }
 
+    public Double prizeOfDijkstra(int source, int target) {
+        // get path at first
+        List<Integer> path = recommendByDijkstra(source, target);
+
+        // corner case
+        if (path == null || path.size() <= 1) {
+            return 0.0;
+        }
+
+        // get average discount
+        double averageEdge = 0;
+        for (int i = 1; i < path.size(); i++) {
+            averageEdge += graphM.getEdge(path.get(i - 1), path.get(i));
+        }
+        averageEdge /= path.size();
+
+        // get the sum of all drink
+        int sumPrize = 0;
+        for (Integer integer : path) {
+            sumPrize += cocktails[integer].getPrice();
+        }
+
+        return sumPrize / averageEdge;
+    }
+
     @Override
     public List<String> recommend(String taste, int option) {
         /*
@@ -304,7 +381,9 @@ public class CocktailRecommender implements ICocktailRecommender {
 
     @Override
     public int order (String drink){
+        drink = convertDrinkName(drink);
         Cocktail cocktail = recipeMap.get(drink);
+        popularityMap.put(drink, popularityMap.get(drink) + 1);
         return cocktail.getPrice();
     }
 
