@@ -32,7 +32,7 @@ public class Cocktail {
 
     /**
      * taste: taste of the drink
-     * e.g. sweet,
+     * e.g. sweet
      */
     private String taste;
 
@@ -41,6 +41,12 @@ public class Cocktail {
      * e.g. Pour the vodka, dry vermouth and olive brine into a cocktail shaker with a handful of ice and shake well.
      */
     private String preparation;
+
+    /**
+     * price: price of the drink
+     * e.g. 13
+     */
+    private int price;
 
 
     /**
@@ -56,13 +62,15 @@ public class Cocktail {
                     String glassware,
                     List<String> ingredients,
                     String taste,
-                    String preparation) {
+                    String preparation,
+                    int price) {
         this.drink = drink;
         this.category = category;
         this.glassware = glassware;
         this.ingredients = ingredients;
         this.taste = taste;
         this.preparation = preparation;
+        this.price = price;
     }
 
     /**
@@ -115,6 +123,14 @@ public class Cocktail {
 
     public void setPreparation(String preparation) {
         this.preparation = preparation;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
 }
