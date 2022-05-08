@@ -194,4 +194,41 @@ public class CocktailRecommender implements ICocktailRecommender {
         }
         return saved;
     }
+
+    public Map<String, Cocktail> getRecipeMap() {
+        return recipeMap;
+    }
+
+    public void setRecipeMap(Map<String, Cocktail> recipeMap) {
+        this.recipeMap = recipeMap;
+    }
+
+    public Map<String, Integer> getPopularityMap() {
+        return popularityMap;
+    }
+
+    public void setPopularityMap(Map<String, Integer> popularityMap) {
+        this.popularityMap = popularityMap;
+    }
+
+    public Map<String, List<Cocktail>> getPreferenceMap() {
+        return preferenceMap;
+    }
+
+    public void setPreferenceMap(Map<String, List<Cocktail>> preferenceMap) {
+        this.preferenceMap = preferenceMap;
+    }
+
+    private Comparator<Pair<String, Integer>> createComparator(){
+        return new Comparator<Pair<String, Integer>>() {
+            @Override
+            public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
+                if (o1.getValue().equals(o2.getValue())){
+                    return o1.getKey().compareTo(o2.getKey());
+                } else {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
+            }
+        };
+    }
 }

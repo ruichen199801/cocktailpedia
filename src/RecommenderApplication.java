@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,8 +20,7 @@ public class RecommenderApplication {
         CocktailRecommender cr = new CocktailRecommender();
         Map<String, Cocktail> recipeMap = cr.loadDataset(path);
         //initialize popularity map and preference map
-        Map<String, Integer> popMap = cr.initializePopularity(recipeMap);
-        Map<String, String> prefMap = cr.buildIndexByPreference(recipeMap);
+        Map<String, List<Cocktail>> prefMap = cr.buildIndexByPreference();
 
         //start running the program until user quits
         while(true){
@@ -36,13 +36,13 @@ public class RecommenderApplication {
             while((userInput = sc.next()) != null){
                 try{
                     int k = Integer.parseInt(userInput);
-                    String selectedCocktail = "";
+                    List<String> selectedCocktail = null;
                     switch(k) {
                         case 1:
                             selectedCocktail = cr.recommendByClassic();
                             break;
                         case 2:
-                            selectedCocktail = cr.recommendByPopularity(popMap);
+                            selectedCocktail = cr.recommendByPopularity();
                             break;
                         case 3:
                             System.out.println("What kind of taste would you like?");
@@ -51,7 +51,7 @@ public class RecommenderApplication {
                                 System.out.println("Sorry, we don't offer that taste. Please choose another one.");
                                 taste = sc.next();
                             }
-                            selectedCocktail = cr.recommendByPreference(taste, prefMap);
+                            selectedCocktail = cr.recommendByPreference(taste);
                             break;
                         case 4:
                             System.out.println("Please define the drink of the cocktail.");
