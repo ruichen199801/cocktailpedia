@@ -84,6 +84,20 @@ public class CocktailRecommenderTest {
     }
 
     @Test
+    public void testRecommendByDijkstra() {
+        List<Integer> cur = cr.recommendByDijkstra(0, 9);
+        assertEquals(0, cur.get(0));
+        assertEquals(5, cur.get(1));
+        assertEquals(9, cur.get(2));
+    }
+
+    @Test
+    public void testPrizeOfDijkstra() {
+        double res = cr.prizeOfDijkstra(0, 9);
+        assertEquals(120.89, res, 0.01);
+    }
+
+    @Test
     public void testRecommend() {
         List<String> cur = cr.recommend("sour", 1);
         assertTrue(cur.contains("old fashioned"));
