@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -58,7 +59,7 @@ public class CocktailRecommenderTest {
     public void testQueryByDrink() {
         CocktailRecommender cocktailRecommender = new CocktailRecommender();
         Map<String, Cocktail> receipe = cocktailRecommender.loadDataset(path);
-        Cocktail cocktail = cocktailRecommender.queryByDrink("white lady");
+        Cocktail cocktail = cocktailRecommender.queryByDrink("White Lady".toLowerCase());
         assertEquals("Ordinary Drink".toLowerCase(), cocktail.getCategory());
         assertEquals("Cocktail glass".toLowerCase(), cocktail.getGlassware());
         assertEquals("sour", cocktail.getTaste());
