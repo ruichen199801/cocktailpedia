@@ -3,28 +3,16 @@
  */
 public class GraphM {
 
-    Cocktail[] nodes;
     double[][] matrix;
 
     //initialize a graph with n nodes
     public GraphM(int n){
-        nodes = new Cocktail[n];
         matrix = new double[n][n];
     }
 
     //Return the number of nodes in this graph
     public int nodesCount(){
-        return nodes.length;
-    }
-
-    //Get the value of node with index u
-    public Cocktail getNode(int u){
-        return nodes[u];
-    }
-
-    //Set the node of index u with given value
-    public void setNode(int u, Cocktail c){
-        nodes[u] = c;
+        return matrix.length;
     }
 
     //Add an edge between node u and v with given weight
