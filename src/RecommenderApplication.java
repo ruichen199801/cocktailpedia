@@ -59,8 +59,7 @@ public class RecommenderApplication {
                             System.out.println("Please define the drink of the cocktail.");
                             String drink = sc.next();
                             System.out.println("Please define the ingredients of the cocktail. Separate by comma.");
-                            List<String> ingredients = new ArrayList<>();
-                            ingredients.add(sc.next());
+                            String ingredients = sc.next();
                             System.out.println("Please define the style of the cocktail.");
                             String style = sc.next();
                             List<String> ingredientsList = Arrays.asList(ingredients.toLowerCase().split(","));

@@ -23,7 +23,7 @@ public class Trie {
     String drink;
 
     public Trie(){
-        children = new Trie[37];
+        children = new Trie[38];
         end = false;
     }
     public Trie[] getChildren(){
@@ -52,26 +52,30 @@ public class Trie {
             index = ch - '0' + 26;
         } else if(ch == ' '){
             index = 36;
+        } else if (ch == '-'){
+            index = 37;
         }
         return index;
     }
-    public String parse(String word){
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < word.length(); i++){
-            char ch = word.charAt(i);
-            if(Character.isLetterOrDigit(ch)){
-                sb.append(Character.toLowerCase(ch));
-            } else if(ch == ' '){
-                sb.append(ch);
-            }
-        }
-        return sb.toString();
-    }
+//    public String parse(String word){
+//        StringBuilder sb = new StringBuilder();
+//        for(int i = 0; i < word.length(); i++){
+//            char ch = word.charAt(i);
+//            if(Character.isLetterOrDigit(ch)){
+//                sb.append(Character.toLowerCase(ch));
+//            } else if(ch == ' '){
+//                sb.append(ch);
+//            } else if (ch == '-'){
+//                sb.append(ch);
+//            }
+//        }
+//        return sb.toString();
+//    }
     public void addWord(String word){
         if(word == null || word.length() == 0){
             return ;
         }
-        word = parse(word);
+//        word = parse(word);
         Trie p = this;
         for(int i = 0; i < word.length(); i++){
             char ch = word.charAt(i);

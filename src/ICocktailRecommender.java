@@ -51,9 +51,9 @@ public interface ICocktailRecommender {
      * in the popularity map.
      *
      * @param drink the name of the drink.
-     * @return the recipe of the cocktail.
+     * @return the list of drink name.
      */
-    Cocktail queryByDrink(String drink);
+    List<String> queryByDrink(String drink);
 
     /**
      * Recommend classic cocktails to users, and return the name of the recommended drink.
@@ -78,6 +78,16 @@ public interface ICocktailRecommender {
      * @return the name of the drink to recommend.
      */
     List<String> recommendByPreference(String taste);
+
+    /**
+     * Recommend cocktails by using Dijkstra based on constructed graph,
+     * and return the list of the vertex which represent the shortest path.
+     *
+     * @param source the source drink.
+     * @param target the target drink.
+     * @return the list of the vertex which represent the shortest path, first node is source and last is target.
+     */
+    public List<Integer>  recommendByDijkstra(int source, int target);
 
     /**
      * Return the recommended cocktail recipe to users based on users' options:
@@ -107,5 +117,11 @@ public interface ICocktailRecommender {
     boolean customizeRecipe(String username,
                                 String drink, List<String> ingredients, String style,
                                 String path);
-  
+
+    /**
+     * Allow a user to order the drink
+     * @param drink       name of drink entered by user
+     * @return price of the drink
+     */
+    int order (String drink);
 }

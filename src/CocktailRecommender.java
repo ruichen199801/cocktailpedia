@@ -9,15 +9,24 @@ import java.util.*;
  */
 
 public class CocktailRecommender implements ICocktailRecommender {
+    public static void main(String[] args) {
+        String path = "./datasets/cocktail_df_cleaned.txt";
+        CocktailRecommender cocktailRecommender = new CocktailRecommender();
+        Map<String, Cocktail> map = cocktailRecommender.loadDataset(path);
+    }
     // fields
     private Map<String, Cocktail> recipeMap;
     private Map<String, Integer> popularityMap;
     private Map<String, List<Cocktail>> preferenceMap;
+    private GraphM graphM;
+    private Trie root;
+
 
     public CocktailRecommender() {
         recipeMap = new HashMap<>();
         popularityMap = new HashMap<>();
         preferenceMap = new HashMap<>();
+        root = new Trie();
     }
 
     @Override
@@ -27,7 +36,8 @@ public class CocktailRecommender implements ICocktailRecommender {
             String line = null;
             while ((line = br.readLine()) != null) {
                 int index1 = line.indexOf(';');
-                String drink = line.substring(0, index1).toLowerCase();
+                String drink = convertDrinkName(line.substring(0, index1)).toLowerCase();
+                root.addWord(drink);
 
                 int index2 = line.indexOf(';', index1 + 1);
                 String category = line.substring(index1 + 1, index2).toLowerCase();
@@ -41,9 +51,9 @@ public class CocktailRecommender implements ICocktailRecommender {
                 int index5 = line.indexOf(';', index4 + 1);
                 String taste = line.substring(index4 + 1, index5).toLowerCase();
 
-//                int index6 = line.indexOf(';', index5 + 1);
                 int index6 = line.lastIndexOf(';');
                 String preparation = line.substring(index5 + 1, index6);
+
                 int price = Integer.parseInt(line.substring(index6 + 1));
 
                 Cocktail cocktail = new Cocktail(drink, category, glassware, ingredients, taste, preparation, price);
@@ -55,6 +65,26 @@ public class CocktailRecommender implements ICocktailRecommender {
         }
         initializePopularity();
         return recipeMap;
+    }
+
+    private String convertDrinkName(String word){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(Character.isAlphabetic(ch)){
+                ch = Character.toLowerCase(ch);
+                if (ch - 'a' < 26 && ch - 'a' >= 0){
+                    sb.append(ch);
+                }
+            } else if (Character.isDigit(ch)){
+                sb.append(ch);
+            } else if(ch == ' '){
+                sb.append(ch);
+            } else if (ch == '-'){
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
     }
 
     private Map<String, Integer> initializePopularity() {
@@ -82,13 +112,12 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public Cocktail queryByDrink(String drink) {
-        if (!recipeMap.containsKey(drink)) {
+    public List<String> queryByDrink(String drink) {
+        List<String> query = root.queryByPrefix(drink);
+        if (query.size() == 0) {
             System.out.printf("We are sorry %s is not available currently, please try other drinks.", drink);
         }
-        Cocktail cocktail = recipeMap.get(drink.toLowerCase());
-        popularityMap.put(drink, popularityMap.get(drink) + 1);
-        return cocktail;
+        return query;
     }
 
     @Override
@@ -138,6 +167,68 @@ public class CocktailRecommender implements ICocktailRecommender {
             }
         }
         return recommendation;
+    }
+
+    @Override
+    public List<Integer>  recommendByDijkstra(int source, int target) {
+        // run Dijkstra
+
+        // get number of nodes
+        int n = graphM.nodesCount();
+
+        // create shortest array and pred array
+        double[] shortest = new double[n];
+        int[] pred = new int[n];
+
+        // initialize
+        Arrays.fill(shortest, Integer.MAX_VALUE);
+        Arrays.fill(pred, -1);
+
+        // update shortest[source]
+        shortest[source] = 0;
+
+        // create a set to maintain the node who are not expanded
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            set.add(i);
+        }
+
+        // iterate to expanded node
+        while (!set.isEmpty()) {
+            Integer curNode = Collections.min(set);
+            for (Integer integer : set) {
+                if (shortest[integer] < shortest[curNode]) {
+                    curNode = integer;
+                }
+            }
+            if (shortest[curNode] == Integer.MAX_VALUE) {
+                break;
+            }
+            int[] neighbors = graphM.neighbors(curNode);
+            for (int neighbor : neighbors) {
+                if (shortest[neighbor] > shortest[curNode] + graphM.getEdge(curNode, neighbor)) {
+                    shortest[neighbor] = shortest[curNode] + graphM.getEdge(curNode, neighbor);
+                    pred[neighbor] = curNode;
+                }
+            }
+            set.remove(curNode);
+        }
+
+        // return value
+        if (pred[target] == -1) {
+            return new ArrayList<>();
+        }
+
+        // find the shortest path
+        List<Integer> res = new ArrayList<>();
+        res.add(target);
+
+        while (target != source) {
+            res.add(pred[target]);
+            target = pred[target];
+        }
+        Collections.reverse(res);
+        return res;
     }
 
     @Override
@@ -209,6 +300,12 @@ public class CocktailRecommender implements ICocktailRecommender {
             e.getStackTrace();
         }
         return saved;
+    }
+
+    @Override
+    public int order (String drink){
+        Cocktail cocktail = recipeMap.get(drink);
+        return cocktail.getPrice();
     }
 
     public Map<String, Cocktail> getRecipeMap() {
