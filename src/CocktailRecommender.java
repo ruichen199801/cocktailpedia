@@ -1,7 +1,9 @@
+
 import javafx.util.Pair;
 
 import java.io.*;
 import java.util.*;
+
 
 /**
  * The implementation class for cocktail recommender.
@@ -167,8 +169,30 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public void customizeRecipe(String username) {
-        // TODO: implement
+    public boolean customizeRecipe(String username,
+                                String drink, String ingredients, String style,
+                                String path) {
+        Recipe recipe = new Recipe(drink, ingredients, style);
+        //create the new directory of this user if it does not exist
+        File dir = new File(path + "/" + username);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        //create new file used to store user's customized recipe
+        File f = new File(dir.getPath() + "/recipe.txt");
+        boolean saved = false;
+        try {
+            FileWriter myWriter = new FileWriter(f.getPath(), true);
+            String content = username + " designed a new recipe named " + drink +
+                    " with " + ingredients + " as base ingredients, in the " +
+                    style + " style.\n";
+            myWriter.write(content);
+            myWriter.close();
+            saved = true;
+        } catch (IOException e){
+            e.getStackTrace();
+        }
+        return saved;
     }
 
     public Map<String, Cocktail> getRecipeMap() {
@@ -195,15 +219,14 @@ public class CocktailRecommender implements ICocktailRecommender {
         this.preferenceMap = preferenceMap;
     }
 
-    private Comparator<Pair<String, Integer>> createComparator() {
-
+    private Comparator<Pair<String, Integer>> createComparator(){
         return new Comparator<Pair<String, Integer>>() {
             @Override
             public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
                 if (o1.getValue().equals(o2.getValue())){
                     return o1.getKey().compareTo(o2.getKey());
                 } else {
-                    return o1.getValue().compareTo(o2.getValue());
+                    return o2.getValue().compareTo(o1.getValue());
                 }
             }
         };

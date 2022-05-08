@@ -101,7 +101,15 @@ public interface ICocktailRecommender {
      * the directory named by the username, and store it into a user map.
      *
      * @param username name of the user.
+
+     * @param drink name of drink entered by user
+     * @param ingredients ingredients of drink entered by user
+     * @param style style of drink entered by user
+     * @param path file path of storing the recipe
+     * @return whether the recipe has been successfully saved.
      */
-    public void customizeRecipe(String username);
+    public boolean customizeRecipe(String username,
+                                String drink, String ingredients, String style,
+                                String path);
 
 }
