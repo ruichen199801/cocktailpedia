@@ -11,25 +11,22 @@ public interface ICocktailRecommender {
     /**
      * A default list of classic cocktails.
      */
-    public static final List<String> CLASSIC = Arrays.asList
+    List<String> CLASSIC = Arrays.asList
             ("old fashioned", "Long Island Iced Tea", "daiquiri", "martini", "whiskey sour");
 
     /**
      * A default number of recommendation limit.
      */
-    public static final int DEFAULT_RECOMMENDATION_LIMIT = 1;
-
-    // TODO: perform data cleaning and wrangling using Pandas to generate a clean dataset
-    //       before implementing the loadDataset() function
+    int DEFAULT_RECOMMENDATION_LIMIT = 1;
 
     /**
      * Load the csv format cocktail dataset, and store the cocktail recipes using a map.
      *
      * @param path file path of the dataset.
      * @return a map storing cocktails recipes, where the key is the name of the drink,
-     *         the value is the recipe of the cocktail.
+     * the value is the recipe of the cocktail.
      */
-    public Map<String, Cocktail> loadDataset(String path);
+    Map<String, Cocktail> loadDataset(String path);
 
     /**
      * Use number of queries of the drink to represent popularity. Initialize the popularity map
@@ -45,25 +42,25 @@ public interface ICocktailRecommender {
      * Group cocktail drinks by taste preference, and store into a new preference map.
      *
      * @return a map storing different categories of cocktail tastes, where the key is the
-     *         taste, the value is the list of cocktails of that taste.
+     * taste, the value is the list of cocktails of that taste.
      */
-    public Map<String, List<Cocktail>> buildIndexByPreference();
+    Map<String, List<Cocktail>> buildIndexByPreference();
 
     /**
      * Return the recipe of the drink name the user queries for, and update the query count of this drink
      * in the popularity map.
      *
      * @param drink the name of the drink.
-     * @return the recipe of the cocktail.
+     * @return the list of drink name.
      */
-    public Cocktail queryByDrink(String drink);
+    List<String> queryByDrink(String drink);
 
     /**
      * Recommend classic cocktails to users, and return the name of the recommended drink.
      *
      * @return the name of the drink to recommend.
      */
-    public List<String> recommendByClassic();
+    List<String> recommendByClassic();
 
     /**
      * Recommend cocktails with top query counts in the popularity map to users,
@@ -71,7 +68,7 @@ public interface ICocktailRecommender {
      *
      * @return the name of the drink to recommend.
      */
-    public List<String>  recommendByPopularity();
+    List<String> recommendByPopularity();
 
     /**
      * Recommend cocktails with the users' preferred taste in the preference map to users,
@@ -80,19 +77,29 @@ public interface ICocktailRecommender {
      * @param taste the users' preferred taste.
      * @return the name of the drink to recommend.
      */
-    public List<String>  recommendByPreference(String taste);
+    List<String> recommendByPreference(String taste);
+
+    /**
+     * Recommend cocktails by using Dijkstra based on constructed graph,
+     * and return the list of the vertex which represent the shortest path.
+     *
+     * @param source the source drink.
+     * @param target the target drink.
+     * @return the list of the vertex which represent the shortest path, first node is source and last is target.
+     */
+    public List<Integer>  recommendByDijkstra(int source, int target);
 
     /**
      * Return the recommended cocktail recipe to users based on users' options:
-     *   Option 1: Recommend by classic
-     *   Option 2: Recommend by popularity
-     *   Option 3: Recommend by preference
-     *   Option 4: Recommend by preference and popularity
+     * Option 1: Recommend by classic
+     * Option 2: Recommend by popularity
+     * Option 3: Recommend by preference
+     * Option 4: Recommend by preference and popularity
      *
      * @param taste the users' preferred taste.
      * @return the cocktail recipe to recommend.
      */
-    public List<String> recommend(String taste, int option);
+    List<String> recommend(String taste, int option);
 
     /**
      * Allow a user to create a customized cocktail recipe. The user can choose from a list of
@@ -100,16 +107,21 @@ public interface ICocktailRecommender {
      * we assemble the recipe based on the choices made by the user, generate a txt file under
      * the directory named by the username, and store it into a user map.
      *
-     * @param username name of the user.
-
-     * @param drink name of drink entered by user
+     * @param username    name of the user.
+     * @param drink       name of drink entered by user
      * @param ingredients ingredients of drink entered by user
-     * @param style style of drink entered by user
-     * @param path file path of storing the recipe
+     * @param style       style of drink entered by user
+     * @param path        file path of storing the recipe
      * @return whether the recipe has been successfully saved.
      */
-    public boolean customizeRecipe(String username,
-                                String drink, String ingredients, String style,
+    boolean customizeRecipe(String username,
+                                String drink, List<String> ingredients, String style,
                                 String path);
 
+    /**
+     * Allow a user to order the drink
+     * @param drink       name of drink entered by user
+     * @return price of the drink
+     */
+    int order (String drink);
 }

@@ -2,16 +2,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The test class for cocktail recommender.
@@ -22,13 +15,11 @@ public class CocktailRecommenderTest {
     private CocktailRecommender cr;
     private String path = "./datasets/cocktail_df_cleaned.txt";
 
-
     @Before
     public void init() {
         cr = new CocktailRecommender();
         cr.loadDataset(path);
         cr.buildIndexByPreference();
-
     }
 
     @Test
@@ -41,6 +32,7 @@ public class CocktailRecommenderTest {
         assertEquals("Margarita/Coupette glass".toLowerCase(), cocktail.getGlassware());
         assertEquals("Lemon Juice".toLowerCase(), cocktail.getIngredients().get(0));
         assertEquals("sour", cocktail.getTaste());
+        assertEquals(12, cocktail.getPrice());
     }
 
     @Test
@@ -66,10 +58,11 @@ public class CocktailRecommenderTest {
     public void testQueryByDrink() {
         CocktailRecommender cocktailRecommender = new CocktailRecommender();
         Map<String, Cocktail> receipe = cocktailRecommender.loadDataset(path);
-        Cocktail cocktail = cocktailRecommender.queryByDrink("White Lady".toLowerCase());
-        assertEquals("Ordinary Drink".toLowerCase().toLowerCase(), cocktail.getCategory());
-        assertEquals("Cocktail glass".toLowerCase(), cocktail.getGlassware());
-        assertEquals("sour", cocktail.getTaste());
+        List<String> cocktail = cocktailRecommender.queryByDrink("Vodka".toLowerCase());
+        assertTrue(cocktail.contains("Vodka And Tonic".toLowerCase()));
+        assertTrue(cocktail.contains("Vodka Fizz".toLowerCase()));
+        assertTrue(cocktail.contains("Vodka Martini".toLowerCase()));
+        assertTrue(cocktail.contains("Vodka Russian".toLowerCase()));
     }
 
     @Test
@@ -112,7 +105,9 @@ public class CocktailRecommenderTest {
     @Test
     public void testCustomizeRecipe() {
         //get user customized recipe
-        Recipe r1 = new Recipe("rainbow", "brandy", "shake");
+        List<String> ingredients = new ArrayList<>();
+        ingredients.add("brandy");
+        Recipe r1 = new Recipe("rainbow", ingredients, "shake");
         String username1 = "Tom";
         //create new directory with recipe text file
         cr.customizeRecipe("Tom", r1.getDrink(), r1.getIngredients(), r1.getStyle(), path);

@@ -2,5 +2,6 @@
 .DS_Store
 # ignore IDEA files
 .idea
+hw-8---project-team-algoholic.iml
 # ignore output files
 /out
