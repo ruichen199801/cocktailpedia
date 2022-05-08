@@ -14,7 +14,7 @@ public class CocktailRecommenderTest {
 
     private CocktailRecommender cr;
     private String path = "./datasets/cocktail_df_cleaned.txt";
-
+    private String storePath = "./users";
     @Before
     public void init() {
         cr = new CocktailRecommender();
@@ -110,12 +110,12 @@ public class CocktailRecommenderTest {
         Recipe r1 = new Recipe("rainbow", ingredients, "shake");
         String username1 = "Tom";
         //create new directory with recipe text file
-        cr.customizeRecipe("Tom", r1.getDrink(), r1.getIngredients(), r1.getStyle(), path);
-        File users = new File(path);
+        cr.customizeRecipe("Tom", r1.getDrink(), r1.getIngredients(), r1.getStyle(), storePath);
+        File users = new File(storePath);
         Set<String> files = new HashSet<>(Arrays.asList(users.list()));
         //test whether the directory exist
         assertTrue(files.contains(username1));
-        String recipePath = path + "/" + username1 + "/recipe.txt";
+        String recipePath = storePath + "/" + username1 + "/recipe.txt";
         //test recipe file exist
         File f = new File(recipePath);
         assertTrue(f.exists());
