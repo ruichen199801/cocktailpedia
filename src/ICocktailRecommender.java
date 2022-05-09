@@ -18,81 +18,71 @@ public interface ICocktailRecommender {
      * Load the csv format cocktail dataset, and store the cocktail recipes using a map.
      *
      * @param path file path of the dataset.
-     * @return a map storing cocktails recipes, where the key is the name of the drink,
-     * the value is the recipe of the cocktail.
+     * @return a map storing cocktails recipes, where the key is the name of the drink, the value is the recipe of the cocktail.
      */
     Map<String, Cocktail> loadDataset(String path);
 
     /**
-     * Use number of queries of the drink to represent popularity. Initialize the popularity map
-     * of all drinks with 0s.
+     * Use number of queries of the drink to represent popularity. Initialize the popularity map of all drinks with 0s.
      *
-     * @param recipeMap the map storing cocktails recipes.
-     * @return a sorted map storing cocktail popularity, where the key is the name of the drink,
-     *         the value is the number of queries of the drink (0 at first).
+     * @return a sorted map storing cocktail popularity, where the key is the name of the drink, the value is the number of queries of the drink (0 at first).
      */
-//    private Map<String, Integer> initializePopularity(Map<String, Cocktail> recipeMap);
+    Map<String, Integer> initializePopularity();
 
     /**
      * Group cocktail drinks by taste preference, and store into a new preference map.
      *
-     * @return a map storing different categories of cocktail tastes, where the key is the
-     * taste, the value is the list of cocktails of that taste.
+     * @return a map storing different categories of cocktail tastes, where the key is the taste, the value is the list of cocktails of that taste.
      */
     Map<String, List<Cocktail>> buildIndexByPreference();
 
     /**
-     * Return the recipe of the drink name the user queries for, and update the query count of this drink
-     * in the popularity map.
+     * Return the recipe of the drink name the user queries for, and update the query count of this drink in the popularity map.
      *
      * @param drink the name of the drink.
-     * @return the list of drink name.
+     * @return a list of the drink names.
      */
     List<String> queryByDrink(String drink);
 
     /**
      * Recommend classic cocktails to users, and return the name of the recommended drink.
      *
-     * @return the name of the drink to recommend.
+     * @return a list of the drink names.
      */
     List<String> recommendByClassic();
 
     /**
-     * Recommend cocktails with top query counts in the popularity map to users,
-     * and return the name of the recommended drink.
+     * Recommend cocktails with top query counts in the popularity map to users, and return the name of the recommended drink.
      *
-     * @return the name of the drink to recommend.
+     * @return a list of the drink names.
      */
     List<String> recommendByPopularity();
 
     /**
-     * Recommend cocktails with the users' preferred taste in the preference map to users,
-     * and return the name of the recommended drink.
+     * Recommend cocktails with the users' preferred taste in the preference map to users, and return the name of the recommended drink.
      *
      * @param taste the users' preferred taste.
-     * @return the name of the drink to recommend.
+     * @return a list of the drink names.
      */
     List<String> recommendByPreference(String taste);
 
     /**
-     * Recommend cocktails by using Dijkstra based on constructed graph,
-     * and return the list of the vertex which represent the shortest path.
+     * Recommend cocktails by using Dijkstra based on constructed graph, and return a list of vertices which represent the shortest path.
      *
      * @param source the source drink.
      * @param target the target drink.
-     * @return the list of the vertex which represent the shortest path, first node is source and last is target.
+     * @return a list of vertices which represent the shortest path, first node is source and last is target.
      */
     List<Integer> recommendByDijkstra(int source, int target);
 
     /**
-     * Recommend cocktails by using Dijkstra based on constructed graph,
-     * and return the list of the vertex which represent the shortest path.
+     * Recommend cocktails by running Dijkstra, and return the price of all drinks recommended after applying the discounts.
      *
      * @param source the source drink.
      * @param target the target drink.
-     * @return the prize of sum of all drinks recommended.
+     * @return the price of all drinks recommended after applying the discounts.
      */
-    Double prizeOfDijkstra(int source, int target);
+    Double priceOfDijkstra(int source, int target);
 
     /**
      * Return the recommended cocktail recipe to users based on users' options:
@@ -107,12 +97,9 @@ public interface ICocktailRecommender {
     List<String> recommend(String taste, int option);
 
     /**
-     * Allow a user to create a customized cocktail recipe. The user can choose from a list of
-     * options we provide, including type of the liquor/spirit, taste, preparation style. Then
-     * we assemble the recipe based on the choices made by the user, generate a txt file under
-     * the directory named by the username, and store it into a user map.
+     * Allow a user to create a customized cocktail recipe. The user can choose from a list of options we provide, including type of the liquor/spirit, taste, preparation style. Then we assemble the recipe based on the choices made by the user, generate a txt file under the directory named by the username, and store it into a user map.
      *
-     * @param username    name of the user.
+     * @param username    name of the user
      * @param drink       name of drink entered by user
      * @param ingredients ingredients of drink entered by user
      * @param style       style of drink entered by user
@@ -124,9 +111,9 @@ public interface ICocktailRecommender {
                                 String path);
 
     /**
-     * Allow a user to order the drink
-     * @param drink       name of drink entered by user
+     * Allow a user to order the drink.
+     * @param drink name of drink entered by user
      * @return price of the drink
      */
-    int order (String drink);
+    int order(String drink);
 }

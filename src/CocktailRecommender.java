@@ -9,20 +9,35 @@ import java.util.*;
  */
 
 public class CocktailRecommender implements ICocktailRecommender {
-    public static void main(String[] args) {
-        String path = "./datasets/cocktail_df_cleaned.txt";
-        CocktailRecommender cocktailRecommender = new CocktailRecommender();
-        Map<String, Cocktail> map = cocktailRecommender.loadDataset(path);
-    }
-    // fields
-    private Map<String, Cocktail> recipeMap;
-    private Map<String, Integer> popularityMap;
-    private Map<String, List<Cocktail>> preferenceMap;
+
+    /**
+     * An undirected graph used for discount combo recommendation.
+     */
     private final GraphM graphM;
+    /**
+     * A Trie used for recipe lookup.
+     */
     private final Trie root;
+    /**
+     * A map storing cocktails recipes, where the key is the name of the drink, the value is the recipe of the cocktail.
+     */
+    private Map<String, Cocktail> recipeMap;
+    /**
+     * A sorted map storing cocktail popularity, where the key is the name of the drink, the value is the number of queries of the drink (0 at first).
+     */
+    private Map<String, Integer> popularityMap;
+    /**
+     * a map storing different categories of cocktail tastes, where the key is the taste, the value is the list of cocktails of that taste.
+     */
+    private Map<String, List<Cocktail>> preferenceMap;
+    /**
+     * A list of detailed cocktail recipes.
+     */
     private Cocktail[] cocktails;
 
-
+    /**
+     * Initialize data structures and build the graph.
+     */
     public CocktailRecommender() {
         recipeMap = new HashMap<>();
         popularityMap = new HashMap<>();
@@ -119,27 +134,31 @@ public class CocktailRecommender implements ICocktailRecommender {
         return recipeMap;
     }
 
-    private String convertDrinkName(String word){
+    /**
+     * Helper method to convert drink name to lower case, and filter out invalid characters.
+     */
+    private String convertDrinkName(String word) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < word.length(); i++){
+        for (int i = 0; i < word.length(); i++) {
             char ch = word.charAt(i);
-            if(Character.isAlphabetic(ch)){
+            if (Character.isAlphabetic(ch)) {
                 ch = Character.toLowerCase(ch);
-                if (ch - 'a' < 26 && ch - 'a' >= 0){
+                if (ch - 'a' < 26 && ch - 'a' >= 0) {
                     sb.append(ch);
                 }
-            } else if (Character.isDigit(ch)){
+            } else if (Character.isDigit(ch)) {
                 sb.append(ch);
-            } else if(ch == ' '){
+            } else if (ch == ' ') {
                 sb.append(ch);
-            } else if (ch == '-'){
+            } else if (ch == '-') {
                 sb.append(ch);
             }
         }
         return sb.toString();
     }
 
-    private Map<String, Integer> initializePopularity() {
+    @Override
+    public Map<String, Integer> initializePopularity() {
         for (String s : recipeMap.keySet()) {
             if (!popularityMap.containsKey(s)) {
                 popularityMap.put(s, 0);
@@ -174,13 +193,12 @@ public class CocktailRecommender implements ICocktailRecommender {
 
     @Override
     public List<String> recommendByClassic() {
-        // directly return CLASSIC
         return CLASSIC;
     }
 
     @Override
     // First, convert the popularity map (general map) to a sorted set(sort by value) e.g. SortedSet<Pair<String, Integer>>
-    // Then choose top xx drinks
+    // Then choose top x drinks
     public List<String> recommendByPopularity() {
         SortedSet<Pair<String, Integer>> set = new TreeSet<>(createComparator());
         for (Map.Entry<String, Integer> entry : popularityMap.entrySet()) {
@@ -222,7 +240,7 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public List<Integer>  recommendByDijkstra(int source, int target) {
+    public List<Integer> recommendByDijkstra(int source, int target) {
         // run Dijkstra
 
         // get number of nodes
@@ -283,7 +301,8 @@ public class CocktailRecommender implements ICocktailRecommender {
         return res;
     }
 
-    public Double prizeOfDijkstra(int source, int target) {
+    @Override
+    public Double priceOfDijkstra(int source, int target) {
         // get path at first
         List<Integer> path = recommendByDijkstra(source, target);
 
@@ -300,12 +319,12 @@ public class CocktailRecommender implements ICocktailRecommender {
         averageEdge /= path.size();
 
         // get the sum of all drink
-        int sumPrize = 0;
+        int sumPrice = 0;
         for (Integer integer : path) {
-            sumPrize += cocktails[integer].getPrice();
+            sumPrice += cocktails[integer].getPrice();
         }
 
-        return sumPrize / averageEdge;
+        return sumPrice / averageEdge;
     }
 
     @Override
@@ -358,8 +377,8 @@ public class CocktailRecommender implements ICocktailRecommender {
         File f = new File(dir.getPath() + "/recipe.txt");
         boolean saved = false;
         String s = "";
-        for (int i = 0; i < ingredients.size(); i++){
-            if (i == ingredients.size() - 1){
+        for (int i = 0; i < ingredients.size(); i++) {
+            if (i == ingredients.size() - 1) {
                 s += ingredients.get(i);
             } else {
                 s += ingredients.get(i) + ", ";
@@ -380,7 +399,7 @@ public class CocktailRecommender implements ICocktailRecommender {
     }
 
     @Override
-    public int order (String drink){
+    public int order(String drink) {
         drink = convertDrinkName(drink);
         Cocktail cocktail = recipeMap.get(drink);
         popularityMap.put(drink, popularityMap.get(drink) + 1);
@@ -411,12 +430,14 @@ public class CocktailRecommender implements ICocktailRecommender {
         this.preferenceMap = preferenceMap;
     }
 
-    public Cocktail[] getCocktails(){
+    public Cocktail[] getCocktails() {
         return cocktails;
     }
-    public Cocktail lookup(String drink){
+
+    public Cocktail lookup(String drink) {
         return recipeMap.getOrDefault(drink, null);
     }
+
     private Comparator<Pair<String, Integer>> createComparator() {
         return new Comparator<Pair<String, Integer>>() {
             @Override
@@ -429,4 +450,5 @@ public class CocktailRecommender implements ICocktailRecommender {
             }
         };
     }
+
 }

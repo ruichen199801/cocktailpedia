@@ -92,8 +92,8 @@ public class CocktailRecommenderTest {
     }
 
     @Test
-    public void testPrizeOfDijkstra() {
-        double res = cr.prizeOfDijkstra(0, 9);
+    public void testPriceOfDijkstra() {
+        double res = cr.priceOfDijkstra(0, 9);
         assertEquals(120.89, res, 0.01);
     }
 
@@ -118,19 +118,22 @@ public class CocktailRecommenderTest {
 
     @Test
     public void testCustomizeRecipe() {
-        //get user customized recipe
+        // get user customized recipe
         List<String> ingredients = new ArrayList<>();
         ingredients.add("brandy");
         Recipe r1 = new Recipe("rainbow", ingredients, "shake");
         String username1 = "Tom";
-        //create new directory with recipe text file
+
+        // create new directory with recipe text file
         cr.customizeRecipe("Tom", r1.getDrink(), r1.getIngredients(), r1.getStyle(), storePath);
         File users = new File(storePath);
         Set<String> files = new HashSet<>(Arrays.asList(users.list()));
-        //test whether the directory exist
+
+        // test whether the directory exist
         assertTrue(files.contains(username1));
         String recipePath = storePath + "/" + username1 + "/recipe.txt";
-        //test recipe file exist
+
+        // test recipe file exist
         File f = new File(recipePath);
         assertTrue(f.exists());
     }
