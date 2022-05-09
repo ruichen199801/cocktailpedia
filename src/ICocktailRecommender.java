@@ -92,7 +92,8 @@ public interface ICocktailRecommender {
      * Option 4: Recommend by preference and popularity
      *
      * @param taste the users' preferred taste.
-     * @return the cocktail recipe to recommend.
+     * @param option the recommendation option the user chooses.
+     * @return a list of the drink names.
      */
     List<String> recommend(String taste, int option);
 
@@ -107,8 +108,10 @@ public interface ICocktailRecommender {
      * @return whether the recipe has been successfully saved.
      */
     boolean customizeRecipe(String username,
-                                String drink, List<String> ingredients, String style,
-                                String path);
+                            String drink,
+                            List<String> ingredients,
+                            String style,
+                            String path);
 
     /**
      * Allow a user to order the drink.
