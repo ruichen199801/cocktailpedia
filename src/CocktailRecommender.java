@@ -18,8 +18,8 @@ public class CocktailRecommender implements ICocktailRecommender {
     private Map<String, Cocktail> recipeMap;
     private Map<String, Integer> popularityMap;
     private Map<String, List<Cocktail>> preferenceMap;
-    private GraphM graphM;
-    private Trie root;
+    private final GraphM graphM;
+    private final Trie root;
     private Cocktail[] cocktails;
 
 

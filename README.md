@@ -51,13 +51,13 @@ CocktailPedia (parent directory)
 ├── src
 │   ├── ICocktailRecommender.java      // interface
 │   ├── CocktailRecommender.java       // implementation class
-│   ├── CocktailRecommenderTest.java   // test class 
+│   ├── CocktailRecommenderTest.java   // tests class 
 │   ├── RecommenderApplication.java    // boot file
 │   ├── Cocktail.java                  // cocktail recipe class
 │   ├── Recipe.java                    // customized recipe class
 │   └── Style.java                     // preparation style enum class
 └── users                              // store users' customized recipes
-    └── test.txt
+    └── tests.txt
 ```
 
 ## Git Instructions

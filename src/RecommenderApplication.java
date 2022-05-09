@@ -10,16 +10,16 @@ public class RecommenderApplication {
     static CocktailRecommender cr;
 
     public static void printOptions(){
-        System.out.println("1 - Query by drink name");
+        System.out.println("1 - Check cocktail recipe");
         System.out.println("2 - Recommend for you");
-        System.out.println("3 - Customize your own");
-        System.out.println("4 - Bulk discount");
+        System.out.println("3 - Discount combo");
+        System.out.println("4 - Customize your own");
     }
 
     public static void printCocktailInfo(Cocktail selectedCocktail){
         System.out.println("Name : " + selectedCocktail.getDrink());
         System.out.println("Category : " + selectedCocktail.getCategory());
-        System.out.println("Glass type : " + selectedCocktail.getGlassware());
+        System.out.println("Glassware : " + selectedCocktail.getGlassware());
         System.out.print("Ingredients : ");
         List<String> ingredients = selectedCocktail.getIngredients();
         for(int i = 0; i < ingredients.size(); i++){
@@ -30,22 +30,23 @@ public class RecommenderApplication {
                 System.out.println();
             }
         }
-        System.out.println("taste : " + selectedCocktail.getTaste());
-        System.out.println("price : " + selectedCocktail.getPrice());
+        System.out.println("Taste : " + selectedCocktail.getTaste());
+        System.out.println("Price : " + selectedCocktail.getPrice());
+        System.out.println("Preparation Instructions : " + selectedCocktail.getPreparation());
         System.out.println("-------------------------------------------------");
     }
 
     public static void printResult(List<String> recommend){
         if(recommend == null){
-            System.out.println("Sorry, we have no such one.");
+            System.out.println("Sorry, we have no such cocktails in our system.");
             return ;
         }
         StringBuilder sb = new StringBuilder();
-        System.out.println("We recommend these for you based on your preference.");
+        System.out.println("We recommend these recipes for you based on your preference.");
         for(int i = 0; i < recommend.size(); i++){
             sb.append("(" + (i + 1) + ") " + recommend.get(i) + "; ");
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 
     public static int selectOne(List<String> recommend){
@@ -94,13 +95,13 @@ public class RecommenderApplication {
         sc = new Scanner(System.in);
         //start running the program until user quits
         double totalPrice = 0;
-        System.out.println("Welcome to our cocktail recommendation program! May I have you username?");
+        System.out.println("Welcome to our cocktail recommendation program! May I have your username?");
         Scanner sc = new Scanner(System.in);
         String username;
         username = sc.next();
         System.out.println("Welcome, " + username + "!");
         System.out.println("How may I help you today? Get the best cocktail for you " +
-                "by entering the corresponding number.");
+                "by entering one of the numbers below.");
         while (true) {
             String drink = "";
             String taste = "";
@@ -111,32 +112,38 @@ public class RecommenderApplication {
             List<String> recommendedCocktail = new ArrayList<>();
             switch(option) {
                 case 1:
-                    System.out.println("Which drink would you like for your cocktail?");
+                    System.out.println("Which cocktail recipe would you like to know?");
                     drink = sc.next();
                     recommendedCocktail = cr.queryByDrink(drink);
                     totalPrice += selectOne(recommendedCocktail);
                     break;
                 case 2:
                     System.out.println("Based on which principle, would you like us to recommend some for you?");
-                    System.out.println("1 - have some classic one");
-                    System.out.println("2 - by popularity");
-                    System.out.println("3 - by your preference for taste");
-                    System.out.println("4 - by preference and popularity");
+                    System.out.println("1 - get the most classic ones!");
+                    System.out.println("2 - get the most popular ones!");
+                    System.out.println("3 - recommend by your preference");
+                    System.out.println("4 - recommend by preference and popularity");
                     int option2 = getValidInt(1, 4);
                     taste = "";
-                    if(option2 == 3 || option2 == 4){
-                        System.out.println("What taste would you like? e.g., sweet, sour, bitter, cream, etc.");
+                    if (option2 == 3 || option2 == 4){
+                        System.out.println("Which taste would you like? e.g., sweet, sour, bitter, cream, etc.");
+                        List<String> tastes = Arrays.asList
+                                ("sweet", "sour", "cream", "bitter", "water", "spicy", "egg", "salty", "mint");
                         taste = sc.next();
+                        if (!tastes.contains(taste)) {
+                            System.out.println("Please enter a valid taste!");
+                            break;
+                        }
                     }
                     recommendedCocktail = cr.recommend(taste, option2);
                     totalPrice += selectOne(recommendedCocktail);
                     break;
-                case 3:
+                case 4:
                     System.out.println("Please design a name of the cocktail.");
                     while(drink.equals("")) drink = sc.nextLine();
-                    System.out.println("Please define the ingredients of the cocktail. Separate by comma.");
+                    System.out.println("Please design the ingredients of the cocktail. Separate by comma.");
                     while(ingredients.equals("")) ingredients = sc.nextLine();
-                    System.out.println("Please define the style of the cocktail.");
+                    System.out.println("Please design the style of the cocktail (shake or stir).");
                     while(style.equals("")) style = sc.nextLine();
                     List<String> ingredientsList = Arrays.asList(ingredients.toLowerCase().split(","));
                     boolean saved = cr.customizeRecipe(username, drink, ingredientsList, style, storePath);
@@ -147,7 +154,7 @@ public class RecommenderApplication {
                     }
                     break;
                 default:
-                    System.out.println("We have a special offer for you. Select two from this list and we " +
+                    System.out.println("We have a special offer for you. Select two drinks from the provided drink list and we " +
                             "will provide you with the best discount.");
                     Cocktail[] cocktails = cr.getCocktails();
                     for(int i = 0; i < cocktails.length; i++){
@@ -164,17 +171,17 @@ public class RecommenderApplication {
                         printCocktailInfo(cocktails[k]);
                     }
                     double combinationPrice = ((int) Math.round(cr.prizeOfDijkstra(num1, num2) * 100)) / 100;
-                    System.out.println("The total price for this bulk discount is " + combinationPrice);
+                    System.out.println("The total price for this discount combo set is " + combinationPrice);
                     totalPrice += combinationPrice;
             }
             //ask the user whether to select another option
-            System.out.println("Would you like to have another one? 1 for Yes and 0 for no.");
+            System.out.println("Would you like to have another one? 1 for Yes and 0 for No.");
             int exit = getValidInt(0, 1);
             //exit the program
             if(exit == 0){
                 totalPrice = ((int) Math.round(totalPrice * 100)) / 100;
                 System.out.println("The total cost of your order today is " + totalPrice);
-                System.out.println("Hope we meet your expectations. Enjoy your day!");
+                System.out.println("Hope we meet your expectations. Enjoy your cocktail!");
                 System.exit(0);
             }
         }
