@@ -173,7 +173,7 @@ public class RecommenderApplication {
             //exit the program
             if(exit == 0){
                 totalPrice = ((int) Math.round(totalPrice * 100)) / 100;
-                System.out.println("The total cost of your choice is " + totalPrice);
+                System.out.println("The total cost of your order today is " + totalPrice);
                 System.out.println("Hope we meet your expectations. Enjoy your day!");
                 System.exit(0);
             }
