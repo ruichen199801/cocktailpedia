@@ -26,16 +26,6 @@ public class GraphMTest {
     }
 
     @Test
-    public void testSetNode(){
-        graph.setNode(3, c1);
-        graph.setNode(5, c2);
-        graph.setNode(8, c3);
-        assertEquals(c1, graph.getNode(3));
-        assertEquals(c2, graph.getNode(5));
-        assertEquals(c3, graph.getNode(8));
-    }
-
-    @Test
     public void testAddEdge(){
         graph.addEdge(1, 2, 0.5);
         graph.addEdge(2, 3, 0.6);
