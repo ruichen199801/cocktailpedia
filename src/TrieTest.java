@@ -1,18 +1,24 @@
-import org.junit.Assert;
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+/**
+ * The test class for Trie.
+ */
 
 public class TrieTest {
+
     Trie root;
+
     @Before
     public void setUp(){
         root = new Trie();
     }
+
     @Test
     public void testAddWord(){
         root.addWord("tr123");
@@ -41,6 +47,7 @@ public class TrieTest {
         assertTrue(child11.getEnd());
         assertEquals("ti", child11.getDrink());
     }
+
     @Test
     public void testQueryByPrefix(){
         root.addWord("child");
@@ -66,4 +73,5 @@ public class TrieTest {
         assertTrue(set3.contains("child"));
         assertTrue(set3.contains("children group"));
     }
+
 }

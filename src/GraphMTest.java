@@ -3,6 +3,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * The test class for graphM.
+ */
+
 public class GraphMTest {
 
     GraphM graph;
@@ -50,4 +54,5 @@ public class GraphMTest {
         assertEquals(5, neighbor1[2]);
         assertEquals(7, neighbor1[3]);
     }
+
 }

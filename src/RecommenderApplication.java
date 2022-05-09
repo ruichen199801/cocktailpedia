@@ -6,9 +6,19 @@ import java.util.*;
 
 public class RecommenderApplication {
 
+    /**
+     * Scanner class to accept user input
+     */
     static Scanner sc;
+
+    /**
+     * CocktailRecommender instance
+     */
     static CocktailRecommender cr;
 
+    /**
+     * List 4 options the program offer
+     */
     public static void printOptions(){
         System.out.println("1 - Check cocktail recipe");
         System.out.println("2 - Recommend for you");
@@ -16,6 +26,9 @@ public class RecommenderApplication {
         System.out.println("4 - Customize your own");
     }
 
+    /**
+     * Get detailed recipe based on name of the drink
+     */
     public static void printCocktailInfo(Cocktail selectedCocktail){
         System.out.println("Name : " + selectedCocktail.getDrink());
         System.out.println("Category : " + selectedCocktail.getCategory());
@@ -36,6 +49,9 @@ public class RecommenderApplication {
         System.out.println("-------------------------------------------------");
     }
 
+    /**
+     * Print the result of recommendation
+     */
     public static void printResult(List<String> recommend){
         if(recommend == null){
             System.out.println("Sorry, we have no such cocktails in our system.");
@@ -83,25 +99,29 @@ public class RecommenderApplication {
         }
     }
 
+    /**
+     * Main class to interact with users.
+     */
     public static void main(String[] args) {
         // Load the cocktail data into recipeMap
         String dataPath = "./datasets/cocktail_df_cleaned.txt";
         String storePath = "./users";
         cr = new CocktailRecommender();
         Map<String, Cocktail> recipeMap = cr.loadDataset(dataPath);
-        //initialize popularity map and preference map
+        // initialize popularity map and preference map
         Map<String, List<Cocktail>> prefMap = cr.buildIndexByPreference();
 
         sc = new Scanner(System.in);
-        //start running the program until user quits
+        // start running the program until user quits
         double totalPrice = 0;
-        System.out.println("Welcome to our cocktail recommendation program! May I have your username?");
+        System.out.println("Welcome to CocktailPedia, an intelligent cocktail recommender! May I have your username please?");
         Scanner sc = new Scanner(System.in);
         String username;
         username = sc.next();
         System.out.println("Welcome, " + username + "!");
         System.out.println("How may I help you today? Get the best cocktail for you " +
                 "by entering one of the numbers below.");
+
         while (true) {
             String drink = "";
             String taste = "";
@@ -110,6 +130,7 @@ public class RecommenderApplication {
             printOptions();
             int option = getValidInt(1, 4);
             List<String> recommendedCocktail = new ArrayList<>();
+
             switch(option) {
                 case 1:
                     System.out.println("Which cocktail recipe would you like to know?");
@@ -117,6 +138,7 @@ public class RecommenderApplication {
                     recommendedCocktail = cr.queryByDrink(drink);
                     totalPrice += selectOne(recommendedCocktail);
                     break;
+
                 case 2:
                     System.out.println("Based on which principle, would you like us to recommend some for you?");
                     System.out.println("1 - get the most classic ones!");
@@ -138,6 +160,7 @@ public class RecommenderApplication {
                     recommendedCocktail = cr.recommend(taste, option2);
                     totalPrice += selectOne(recommendedCocktail);
                     break;
+
                 case 4:
                     System.out.println("Please design a name of the cocktail.");
                     while(drink.equals("")) drink = sc.nextLine();
@@ -153,6 +176,7 @@ public class RecommenderApplication {
                         System.out.println("Sorry, some errors occurred while saving your recipe.");
                     }
                     break;
+
                 default:
                     System.out.println("We have a special offer for you. Select two drinks from the provided drink list and we " +
                             "will provide you with the best discount.");
@@ -170,15 +194,15 @@ public class RecommenderApplication {
                     for(Integer k : indexOf){
                         printCocktailInfo(cocktails[k]);
                     }
-                    double combinationPrice = ((int) Math.round(cr.prizeOfDijkstra(num1, num2) * 100)) / 100;
+                    double combinationPrice = ((int) Math.round(cr.priceOfDijkstra(num1, num2) * 100)) / 100;
                     System.out.println("The total price for this discount combo set is " + combinationPrice);
                     totalPrice += combinationPrice;
             }
-            //ask the user whether to select another option
+            // ask the user whether to select another option
             System.out.println("Would you like to have another one? 1 for Yes and 0 for No.");
             int exit = getValidInt(0, 1);
-            //exit the program
-            if(exit == 0){
+            // exit the program
+            if (exit == 0) {
                 totalPrice = ((int) Math.round(totalPrice * 100)) / 100;
                 System.out.println("The total cost of your order today is " + totalPrice);
                 System.out.println("Hope we meet your expectations. Enjoy your cocktail!");
