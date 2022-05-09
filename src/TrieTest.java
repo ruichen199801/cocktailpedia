@@ -28,7 +28,7 @@ public class TrieTest {
                 assertNull(root.getChildren()[i]);
             }
         }
-        Trie child1 = root.children[19];
+        Trie child1 = root.child[19];
         assertFalse(child1.getEnd());
         for(int i = 0; i < 37; i++){
             if(i == 8 || i == 14 || i == 17){

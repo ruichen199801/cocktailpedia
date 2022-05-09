@@ -411,6 +411,9 @@ public class CocktailRecommender implements ICocktailRecommender {
         this.preferenceMap = preferenceMap;
     }
 
+    public Cocktail[] getCocktails(){
+        return cocktails;
+    }
     private Comparator<Pair<String, Integer>> createComparator() {
         return new Comparator<Pair<String, Integer>>() {
             @Override

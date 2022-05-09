@@ -10,7 +10,7 @@ public class Trie {
     /**
      * drink name contains 26 english letters, 10 digit numbers plus blank space.
      */
-    Trie[] children;
+    Trie[] child;
 
     /**
      * Marks the end of a string as true.
@@ -23,14 +23,14 @@ public class Trie {
     String drink;
 
     public Trie(){
-        children = new Trie[38];
+        child = new Trie[38];
         end = false;
     }
     public Trie[] getChildren(){
-        return children;
+        return child;
     }
     public void setChildren(Trie[] children){
-        this.children = children;
+        this.child = children;
     }
     public boolean getEnd(){
         return end;
@@ -80,10 +80,10 @@ public class Trie {
         for(int i = 0; i < word.length(); i++){
             char ch = word.charAt(i);
             int index = getIndex(ch);
-            if(p.children[index] == null) {
-                p.children[index] = new Trie();
+            if(p.child[index] == null) {
+                p.child[index] = new Trie();
             }
-            p = p.children[index];
+            p = p.child[index];
         }
         p.setEnd(true);
         p.setDrink(word);
@@ -98,10 +98,10 @@ public class Trie {
         for(int i = 0; i < prefix.length(); i++){
             char ch = prefix.charAt(i);
             int index = getIndex(ch);
-            if(p.children[index] == null){
+            if(p.child[index] == null){
                 return ans;
             }
-            p = p.children[index];
+            p = p.child[index];
         }
         LinkedList<Trie> queue = new LinkedList<>();
         queue.offerLast(p);
@@ -109,10 +109,13 @@ public class Trie {
             p = queue.pollFirst();
             if(p.end){
                 ans.add(p.getDrink());
+                if(ans.size() >= 5){
+                    return ans;
+                }
             }
-            for(int i = 0; i < 37; i++){
-                if(p.children[i] != null){
-                    queue.offerLast(p.children[i]);
+            for (int i = 0; i < 37; i++) {
+                if (p.child[i] != null) {
+                    queue.offerLast(p.child[i]);
                 }
             }
         }
