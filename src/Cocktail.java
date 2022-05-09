@@ -81,10 +81,6 @@ public class Cocktail {
         return drink;
     }
 
-    public void setDrink(String drink) {
-        this.drink = drink;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -97,40 +93,20 @@ public class Cocktail {
         return glassware;
     }
 
-    public void setGlassware(String glassware) {
-        this.glassware = glassware;
-    }
-
     public List<String> getIngredients() {
         return ingredients;
-    }
-
-    public void setIngredients(List<String> ingredients) {
-        this.ingredients = ingredients;
     }
 
     public String getTaste() {
         return taste;
     }
 
-    public void setTaste(String taste) {
-        this.taste = taste;
-    }
-
     public String getPreparation() {
         return preparation;
     }
 
-    public void setPreparation(String preparation) {
-        this.preparation = preparation;
-    }
-
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
 }

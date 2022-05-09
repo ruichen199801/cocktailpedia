@@ -13,8 +13,8 @@ import java.util.*;
 public class CocktailRecommenderTest {
 
     private CocktailRecommender cr;
-    private String path = "./datasets/cocktail_df_cleaned.txt";
-    private String storePath = "./users";
+    private final String path = "./datasets/cocktail_df_cleaned.txt";
+    private final String storePath = "./users";
     @Before
     public void init() {
         cr = new CocktailRecommender();
@@ -26,7 +26,7 @@ public class CocktailRecommenderTest {
     public void testLoadDataset() {
         CocktailRecommender cocktailRecommender = new CocktailRecommender();
         Map<String, Cocktail> map = cocktailRecommender.loadDataset(path);
-        assertTrue(map.keySet().contains("Zizi Coin-coin".toLowerCase()));
+        assertTrue(map.containsKey("Zizi Coin-coin".toLowerCase()));
         Cocktail cocktail = map.get("Zizi Coin-coin".toLowerCase());
         assertEquals("Punch / Party Drink".toLowerCase(), cocktail.getCategory());
         assertEquals("Margarita/Coupette glass".toLowerCase(), cocktail.getGlassware());
@@ -40,7 +40,7 @@ public class CocktailRecommenderTest {
         CocktailRecommender cocktailRecommender = new CocktailRecommender();
         Map<String, Cocktail> map = cocktailRecommender.loadDataset(path);
         Map<String, Integer> popularity = cocktailRecommender.getPopularityMap();
-        assertTrue(popularity.keySet().contains("Tequila Sour".toLowerCase()));
+        assertTrue(popularity.containsKey("Tequila Sour".toLowerCase()));
         assertEquals(0, popularity.get("Tequila Sour".toLowerCase()));
     }
 
@@ -49,9 +49,9 @@ public class CocktailRecommenderTest {
         CocktailRecommender cocktailRecommender = new CocktailRecommender();
         Map<String, Cocktail> map = cocktailRecommender.loadDataset(path);
         Map<String, List<Cocktail>> preference = cocktailRecommender.buildIndexByPreference();
-        assertTrue(preference.keySet().contains("sour"));
-        assertTrue(preference.keySet().contains("spicy"));
-        assertTrue(preference.keySet().contains("sweet"));
+        assertTrue(preference.containsKey("sour"));
+        assertTrue(preference.containsKey("spicy"));
+        assertTrue(preference.containsKey("sweet"));
     }
 
     @Test

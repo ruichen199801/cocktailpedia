@@ -9,15 +9,10 @@ import java.util.Map;
 public interface ICocktailRecommender {
 
     /**
-     * A default list of classic cocktails.
+     * A list of classic cocktails.
      */
     List<String> CLASSIC = Arrays.asList
-            ("old fashioned", "Long Island Iced Tea", "daiquiri", "martini", "whiskey sour");
-
-    /**
-     * A default number of recommendation limit.
-     */
-    int DEFAULT_RECOMMENDATION_LIMIT = 1;
+            ("old fashioned", "long island iced tea", "daiquiri", "martini", "whiskey sour");
 
     /**
      * Load the csv format cocktail dataset, and store the cocktail recipes using a map.
@@ -87,7 +82,7 @@ public interface ICocktailRecommender {
      * @param target the target drink.
      * @return the list of the vertex which represent the shortest path, first node is source and last is target.
      */
-    public List<Integer> recommendByDijkstra(int source, int target);
+    List<Integer> recommendByDijkstra(int source, int target);
 
     /**
      * Recommend cocktails by using Dijkstra based on constructed graph,
@@ -97,7 +92,7 @@ public interface ICocktailRecommender {
      * @param target the target drink.
      * @return the prize of sum of all drinks recommended.
      */
-    public Double prizeOfDijkstra(int source, int target);
+    Double prizeOfDijkstra(int source, int target);
 
     /**
      * Return the recommended cocktail recipe to users based on users' options:

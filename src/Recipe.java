@@ -28,10 +28,6 @@ public class Recipe {
      * constructor
      */
 
-    public Recipe(String drink) {
-        this.drink = drink;
-    }
-
     public Recipe(String drink, List<String> ingredients, String style) {
         this.drink = drink;
         this.ingredients = ingredients;
@@ -46,24 +42,12 @@ public class Recipe {
         return drink;
     }
 
-    public void setDrink(String drink) {
-        this.drink = drink;
-    }
-
     public List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
-        this.ingredients = ingredients;
-    }
-
     public String getStyle() {
         return style;
-    }
-
-    public void setStyle(String style) {
-        this.style = style;
     }
 
 }
