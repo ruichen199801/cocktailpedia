@@ -125,7 +125,7 @@ public class RecommenderApplication {
                     int option2 = getValidInt(1, 4);
                     taste = "";
                     if(option2 == 3 || option2 == 4){
-                        System.out.println("What taste would you like? ex: sweet, sour, bitter, cream, etc.");
+                        System.out.println("What taste would you like? e.g., sweet, sour, bitter, cream, etc.");
                         taste = sc.next();
                     }
                     recommendedCocktail = cr.recommend(taste, option2);
