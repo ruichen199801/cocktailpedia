@@ -414,6 +414,9 @@ public class CocktailRecommender implements ICocktailRecommender {
     public Cocktail[] getCocktails(){
         return cocktails;
     }
+    public Cocktail lookup(String drink){
+        return recipeMap.getOrDefault(drink, null);
+    }
     private Comparator<Pair<String, Integer>> createComparator() {
         return new Comparator<Pair<String, Integer>>() {
             @Override

@@ -16,6 +16,25 @@ public class RecommenderApplication {
         System.out.println("4 - Bulk discount");
     }
 
+    public static void printCocktailInfo(Cocktail selectedCocktail){
+        System.out.println("Name : " + selectedCocktail.getDrink());
+        System.out.println("Category : " + selectedCocktail.getCategory());
+        System.out.println("Glass type : " + selectedCocktail.getGlassware());
+        System.out.print("Ingredients : ");
+        List<String> ingredients = selectedCocktail.getIngredients();
+        for(int i = 0; i < ingredients.size(); i++){
+            System.out.print(ingredients.get(i));
+            if(i != ingredients.size() - 1){
+                System.out.print(" ,");
+            } else {
+                System.out.println();
+            }
+        }
+        System.out.println("taste : " + selectedCocktail.getTaste());
+        System.out.println("price : " + selectedCocktail.getPrice());
+        System.out.println("-------------------------------------------------");
+    }
+
     public static void printResult(List<String> recommend){
         if(recommend == null){
             System.out.println("Sorry, we have no such one.");
@@ -24,7 +43,7 @@ public class RecommenderApplication {
         StringBuilder sb = new StringBuilder();
         System.out.println("We recommend these for you based on your preference.");
         for(int i = 0; i < recommend.size(); i++){
-            sb.append("(" + (i + 1) + ")," + recommend.get(i) + "; ");
+            sb.append("(" + (i + 1) + ") " + recommend.get(i) + "; ");
         }
         System.out.println(sb.toString());
     }
@@ -36,13 +55,18 @@ public class RecommenderApplication {
         printResult(recommend);
         int k = getValidInt(1, recommend.size());
         String selected = recommend.get(k - 1);
-        System.out.println(selected + " is an excellent one!");
+        Cocktail selectedCocktail = cr.lookup(selected);
+        printCocktailInfo(selectedCocktail);
         int price = cr.order(selected);
         return price;
     }
 
     public static int getValidInt(int min, int max){
-        System.out.println("Please select a number between " + min + " and " + max);
+        if(min != max){
+            System.out.println("Please select a number between " + min + " and " + max);
+        } else {
+            System.out.println("Please enter number" + min);
+        }
         String input = sc.next();
         while(true){
             try{
@@ -100,7 +124,7 @@ public class RecommenderApplication {
                     System.out.println("4 - by preference and popularity");
                     int option2 = getValidInt(1, 4);
                     taste = "";
-                    if(option2 == 3 || option == 4){
+                    if(option2 == 3 || option2 == 4){
                         System.out.println("What taste would you like? ex: sweet, sour, bitter, cream, etc.");
                         taste = sc.next();
                     }
@@ -137,9 +161,11 @@ public class RecommenderApplication {
                     List<Integer> indexOf = cr.recommendByDijkstra(num1, num2);
                     System.out.println("You can have a best discount by this combination.");
                     for(Integer k : indexOf){
-                        System.out.println(cocktails[k].getDrink() + "; ");
+                        printCocktailInfo(cocktails[k]);
                     }
-                    totalPrice += cr.prizeOfDijkstra(num1, num2);
+                    double combinationPrice = ((int) Math.round(cr.prizeOfDijkstra(num1, num2) * 100)) / 100;
+                    System.out.println("The total price for this bulk discount is " + combinationPrice);
+                    totalPrice += combinationPrice;
             }
             //ask the user whether to select another option
             System.out.println("Would you like to have another one? 1 for Yes and 0 for no.");
