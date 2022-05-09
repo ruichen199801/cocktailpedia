@@ -94,7 +94,7 @@ public class CocktailRecommenderTest {
     @Test
     public void testPriceOfDijkstra() {
         double res = cr.priceOfDijkstra(0, 9);
-        assertEquals(120.89, res, 0.01);
+        assertEquals(24.12, res, 0.01);
     }
 
     @Test

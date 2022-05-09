@@ -45,6 +45,9 @@ public class CocktailRecommender implements ICocktailRecommender {
         root = new Trie();
         graphM = new GraphM(10);
         // 0 1
+
+        // u, v
+        // edge(u, v) = 0.6, price = (price(u) + price(v)) * 0.6
         graphM.addEdge(0, 1, 0.82);
         graphM.addEdge(1, 0, 0.82);
         // 1 2
@@ -324,7 +327,7 @@ public class CocktailRecommender implements ICocktailRecommender {
             sumPrice += cocktails[integer].getPrice();
         }
 
-        return sumPrice / averageEdge;
+        return sumPrice * averageEdge;
     }
 
     @Override
